@@ -31,7 +31,7 @@ export default function HeroSection(props: {
           <Image
             src={props.src}
             alt="header content"
-            width={500}
+            width={300}
             height={300}
             className={style.photo}
           />

@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import style from "../styles/Nav.module.css";
-import { AiFillHome, AiFillMedicineBox } from "react-icons/ai";
-import { GiDoctorFace, GiMeditation, GiHamburgerMenu } from "react-icons/gi";
+import { AiFillHome, AiOutlineGroup } from "react-icons/ai";
+import { GiMeditation, GiHamburgerMenu } from "react-icons/gi";
+import { FaBriefcaseMedical } from "react-icons/fa";
 export default function Nav({ route }: { route: string }) {
   const [navOpen, toggleNav] = useState(false);
   return (
@@ -36,18 +37,27 @@ export default function Nav({ route }: { route: string }) {
               </Link>
             </li>
             <li>
-              <Link href={"/medicines"}>
-                <AiFillMedicineBox /> Medicines
+              <Link
+                className={route == "/discussions" ? style.active : ""}
+                href={"/discussions"}
+              >
+                <AiOutlineGroup /> Discussions
               </Link>
             </li>
 
             <li>
-              <Link href={"/psychiatrists"}>
-                <GiDoctorFace /> Psychiatrists
+              <Link
+                className={route == "/psychiatrists" ? style.active : ""}
+                href={"/psychiatrists"}
+              >
+                <FaBriefcaseMedical /> Psychiatrists
               </Link>
             </li>
             <li>
-              <Link href={"/"}>
+              <Link
+                className={route == "/meditations" ? style.active : ""}
+                href={"/"}
+              >
                 <GiMeditation /> Meditations
               </Link>
             </li>

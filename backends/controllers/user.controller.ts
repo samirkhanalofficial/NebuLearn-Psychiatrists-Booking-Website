@@ -8,11 +8,20 @@ import bcrypt from "bcrypt";
 // Define the password validation schema
 
 const AddUserValidation = Joi.object({
+<<<<<<< HEAD
   fullName: Joi.string().min(3).max(255).required(),
   email: Joi.string().email().min(3).max(255).required(),
   password: Joi.string().min(8).required(),
   confirmPassword: Joi.string().valid(Joi.ref("password")).required(),
   age: Joi.number().min(15).max(99).required(),
+=======
+    fullName: Joi.string().min(3).max(255).required(),
+    email: Joi.string().email().min(3).max(255).required(),
+    password: Joi.string().min(8).required(),
+    confirmPassword: Joi.string().valid(Joi.ref('password')).required(),
+    age: Joi.number().min(15).max(99).required()
+
+>>>>>>> 39fd81640e8369cb357021e3cdda25cfe148cd0b
 });
 
 class UserController {
@@ -25,6 +34,7 @@ class UserController {
       const { error, value } = AddUserValidation.validate(req.body);
       if (error) return res.status(400).json({ message: error.message });
 
+<<<<<<< HEAD
       bcrypt.hash(
         req.body.password,
         parseInt(process.env.SALT_ROUNDS!),
@@ -37,6 +47,21 @@ class UserController {
             age: value.age,
           };
           console.log(value.email);
+=======
+            bcrypt.hash(
+                req.body.password,
+                parseInt(process.env.SALT_ROUNDS!),
+                async (err, hash) => {
+                    if (err)
+                        return res.status(400).json({ message: err.message });
+                    const newData: userType = {
+                        fullName: value.fullName,
+                        email: value.email,
+                        password: hash,
+                        age: value.age
+                    };
+                    console.log(value.email);
+>>>>>>> 39fd81640e8369cb357021e3cdda25cfe148cd0b
 
           const userExists = await this.userService.getUserByEmail(value.email);
           if (userExists)
