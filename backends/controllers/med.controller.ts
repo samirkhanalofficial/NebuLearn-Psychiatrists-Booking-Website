@@ -14,13 +14,40 @@ class TodoController {
     constructor(
         private medService: MedService,
         private authService: AuthService
-    ) {
+    ) 
+    {
         mongooseService;
     }
+
+    addMedicine = async (req: NextApiRequest, res: NextApiResponse) => {
+        // { title , desc , date}
+        const token = req.headers.authorization;
+
+        if (token) {
+            const verified = (await this.authService.verifyToken(token))!;
+            const { error, value } = AddMedValidation.validate(req.body);
+            const updatedValue = { email: verified.email, ...value };
+            if (verified) {
+                if (error)
+                    return res.status(400).json({ message: error.message });
+                const medList = await this.medService.addMed(updatedValue);
+                res.json(medList);
+            } else {
+                res.json({
+                    message: 'Invalid Token!!!',
+                });
+            }
+        } else {
+            res.json({
+                message: 'No Token Found!!!',
+            });
+        }
+    };
+}
 
     // show list
     //   getmyList (email
     
-}
+
 
 export const todoController = new TodoController(medService, authService);

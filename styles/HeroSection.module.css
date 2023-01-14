@@ -1,31 +1,31 @@
 .mainForm {
   display: flex;
   align-items: center;
-  justify-content: center;
-
-  margin: auto;
+  justify-content: space-around;
+  padding: 3% 30px;
 }
 .TextContent {
   margin-top: 50px;
-  font-size: 2rem;
-  line-height: 50.82px;
+  font-size: 1.8rem;
+  line-height: 75.82px;
+  margin-bottom: 23px;
 }
 
 .subTitle {
-  font-size: 1.5rem;
-  line-height: 40.82px;
+  font-size: 1.2rem;
+  line-height: 35.82px;
 }
 
 .photo {
-  height: 701px;
-  width: 634;
+  height: 400px;
+  width: 580px;
 }
 
 .blueWord {
   color: #03c4ff;
 }
 .button {
-  width: 60%;
+  width: 336px;
   background-color: #03c4ff;
   padding: 12px 8px;
   font-size: 1.2rem;
@@ -39,4 +39,5 @@
   display: inline-block;
 }
 .button:hover {
+  background-color: rgb(13, 22, 136);
 }

@@ -3,8 +3,9 @@ import Nav from "../components/Nav";
 import { useRouter } from "next/router";
 import HeroSection from "@/components/HeroSection";
 
-// RedHat, smartcontract in solidity
-export default function Home() {
+import React from "react";
+
+export default function Psychiatrists() {
   const router = useRouter();
   return (
     <>
@@ -28,7 +29,7 @@ export default function Home() {
             Improve your mental health, spirituality <br /> and livings with
             NebulaCare.
           </>
-          src="/brain.png"
+          src="/yoga.png"
         />
       </div>
     </>
