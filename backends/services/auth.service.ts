@@ -13,6 +13,7 @@ class AuthService {
       id: user.id,
       email: user.email,
       loginAt: Date(),
+      role:user.role,
     };
     const token = await jwt.sign(payload, process.env.JWT_KEY!, {
       expiresIn: 360000,
