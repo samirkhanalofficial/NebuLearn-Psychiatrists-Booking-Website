@@ -15,7 +15,7 @@ class AuthService {
       loginAt: Date(),
     };
     const token = await jwt.sign(payload, process.env.JWT_KEY!, {
-      expiresIn: 3600,
+      expiresIn: 360000,
     });
     return token;
   };
