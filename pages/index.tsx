@@ -3,12 +3,13 @@ import Nav from "../components/Nav";
 import { useRouter } from "next/router";
 import HeroSection from "@/components/HeroSection";
 import style from "../styles/index.module.css";
+import Footer from "@/components/Footer";
 
 // RedHat, smartcontract in solidity
 export default function Home() {
   const router = useRouter();
   return (
-    <>
+    <div className={style.main}>
       <Head>
         <title>CodeStorm</title>
         <meta
@@ -31,10 +32,13 @@ export default function Home() {
           </>
           src="/brain.png"
         />
-        <div>
+        <div className={style.buttonSection}>
           <button className={style.button}>Get Started</button>
         </div>
       </div>
-    </>
+      <footer className={style.footer}>
+        <Footer />
+      </footer>
+    </div>
   );
 }
