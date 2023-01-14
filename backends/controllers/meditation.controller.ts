@@ -84,6 +84,15 @@ class MeditationController {
       });
     }
   };
+
+  getList = async (req: NextApiRequest, res: NextApiResponse) => {
+    try {
+      const list = await this.medService.getList();
+      return res.status(200).json(list);
+    } catch (e) {
+      res.status(400).json({ message: "some problems occured" });
+    }
+  };
 }
 
 export const meditationController = new MeditationController(
