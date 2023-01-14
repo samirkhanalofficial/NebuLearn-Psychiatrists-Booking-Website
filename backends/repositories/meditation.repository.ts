@@ -15,6 +15,11 @@ class MeditationRepository {
   deleteMeds = async (id: string) => {
     await Meditation.findOneAndDelete({ _id: id });
   };
+
+  getList = async () => {
+    const list = await Meditation.findOne({});
+    return list;
+  };
 }
 let meditationRepository = new MeditationRepository();
 
