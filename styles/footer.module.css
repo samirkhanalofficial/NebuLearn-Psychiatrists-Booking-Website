@@ -1,0 +1,44 @@
+.footer {
+  background-color: #029dcc;
+}
+.logo {
+  color: aliceblue;
+}
+.logoSection {
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  margin-top: 50px;
+  font-size: 1.8rem;
+  padding-top: 30px;
+  color: aliceblue;
+  gap: 3%;
+}
+
+.comName {
+  top: 110px;
+  margin-left: 45px;
+  text-align: center;
+  font-size: 1.1rem;
+}
+.iconlogo {
+  border: 2px solid rgb(254, 252, 252);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+.h3 {
+  color: aliceblue;
+  text-align: center;
+  padding-top: 12px;
+  padding-bottom: 40px;
+}
+.footer {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+}
