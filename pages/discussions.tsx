@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import Nav from "@/components/Nav";
 import Head from "next/head";
 import Link from "next/link";
@@ -64,6 +65,7 @@ export default function Discussions() {
           ))}
         </div>
       </div>
+      <Footer />
     </>
   );
 }

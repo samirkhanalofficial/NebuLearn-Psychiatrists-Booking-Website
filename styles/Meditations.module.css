@@ -11,6 +11,8 @@
   margin-top: 40px;
   font-size: 2.1rem;
 }
-.blueWord {
-  color: #03c4ff;
+
+.main {
+  position: relative;
+  height: 100%;
 }

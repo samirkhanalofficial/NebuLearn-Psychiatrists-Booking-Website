@@ -1,3 +1,7 @@
+.main {
+  position: relative;
+  height: 960px;
+}
 .button {
   width: 325px;
   background-color: #03c4ff;
@@ -15,4 +19,7 @@
 }
 .button:hover {
   background-color: rgb(13, 22, 136);
+}
+.buttonSection {
+  margin-bottom: 200px;
 }

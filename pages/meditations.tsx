@@ -6,6 +6,7 @@ import style from "../styles/Meditations.module.css";
 
 import React, { useState } from "react";
 import Card from "@/components/Card";
+import Footer from "@/components/Footer";
 
 export default function Psychiatrists() {
   const router = useRouter();
@@ -33,7 +34,7 @@ export default function Psychiatrists() {
     },
   ]);
   return (
-    <>
+    <div className={style.main}>
       <Head>
         <title>CodeStorm</title>
         <meta
@@ -66,6 +67,7 @@ export default function Psychiatrists() {
           </>
         ))}
       </div>
-    </>
+      <Footer />
+    </div>
   );
 }

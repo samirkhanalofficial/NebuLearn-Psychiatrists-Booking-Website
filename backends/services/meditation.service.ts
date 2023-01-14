@@ -17,6 +17,11 @@ class MeditationService {
   deleteMed = async (id: string) => {
     await this.meditationRepository.deleteMeds(id);
   };
+
+  getList = async () => {
+    const list = await this.meditationRepository.getList();
+    return list;
+  };
 }
 
 let meditationService = new MeditationService(meditationRepository);
