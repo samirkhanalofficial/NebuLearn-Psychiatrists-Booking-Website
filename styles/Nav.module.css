@@ -1,0 +1,76 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navigation ul {
+  display: flex;
+  list-style-type: none;
+  color: black;
+  font-weight: bold;
+  justify-content: space-around;
+  gap: 30px;
+  align-items: center;
+}
+
+.navigation ul li a {
+  text-decoration: none;
+  color: black;
+}
+.navigation ul li a.active,
+.navigation ul li a:hover {
+  color: #4664c2;
+}
+.getStartedButton {
+  background-color: #4664c2;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+}
+.menu {
+  display: none;
+}
+@media only screen and (max-width: 720px) {
+  .nav {
+    display: block;
+  }
+  .navActive {
+    height: auto;
+  }
+  .mobileNav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav .navigation {
+    overflow: hidden;
+  }
+  .nav .navigation ul {
+    display: block;
+  }
+  .nav .navigation ul li {
+    padding: 10px 0px;
+  }
+  .menu {
+    display: block;
+  }
+  .animateHeight {
+    transition: height 1s;
+  }
+  .showHeight {
+    height: 200px !important;
+  }
+  .showHeightofButton {
+    height: auto !important;
+  }
+  .hideHeight {
+    height: 0;
+    overflow-y: hidden !important;
+    padding: 0;
+  }
+}
