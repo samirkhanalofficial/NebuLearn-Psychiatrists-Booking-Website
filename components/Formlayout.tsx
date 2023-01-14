@@ -10,7 +10,10 @@ export default function Login({
   return (
     <>
       <div className={style.mainForm}>
-        <div className={style.loginSide}>{children}</div>
+        <div className={style.loginSide}>
+          <div className={style.logo}></div>
+          {children}
+        </div>
         <div className={style.imageSide}>
           <Image
             alt="hero-image"
