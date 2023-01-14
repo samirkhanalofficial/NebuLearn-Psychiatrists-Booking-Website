@@ -1,0 +1,166 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital@1&display=swap");
+.mainForm {
+  background-color: rgb(255, 255, 255);
+  justify-content: space-between;
+  border-radius: 8px;
+  margin: 10px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  width: 80%;
+  box-shadow: 10px 5px 5px rgb(215, 214, 214);
+}
+
+.loginSide {
+  /* background-color: aquamarine; */
+  width: 50%;
+  padding: 4% 6%;
+}
+
+.imageSide {
+  width: 50%;
+  border-radius: 7px;
+}
+.image {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+}
+.loginButton {
+  width: 86%;
+  background-color: rgba(62, 96, 248, 0.933);
+  padding: 12px 8px;
+  font-size: 1.2rem;
+  border: none;
+  outline: none;
+  border-radius: 7px;
+  color: aliceblue;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in;
+  align-content: center;
+  display: block;
+  margin: 10% 0%;
+}
+.loginButton:hover {
+  background-color: rgb(26, 26, 209) !important;
+}
+.inputField {
+  padding: 9px 18px;
+  border-style: none;
+  width: 87%;
+  text-align: left;
+  font-size: large;
+  /* background-color: rgb(226, 226, 216); */
+  border-bottom: 2px solid rgb(90, 90, 229);
+  background-color: #f0f0f0;
+  border-radius: 7px 7px 0 0;
+  margin-bottom: 4%;
+  outline: none;
+}
+.passwordBox {
+  position: relative;
+}
+.hidePassowrd {
+  position: absolute;
+  right: 16%;
+  top: 16%;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.h1 {
+  margin-bottom: 13%;
+  font-size: 2em;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: inline-block;
+}
+.forPass {
+  font-size: 0.9em;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: blue;
+  font-weight: lighter;
+  margin-top: 10px;
+  text-align: right;
+  margin-right: 13%;
+  cursor: pointer;
+  text-decoration: none;
+}
+.forPass:hover {
+  color: rgb(15, 15, 201);
+  text-decoration: underline;
+}
+
+.p {
+  margin-bottom: 13%;
+  font-size: 1em;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: rgb(117, 117, 112);
+}
+.paraMobile {
+  display: none;
+}
+.LoginContent {
+  margin-bottom: 4%;
+  font-weight: bold;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+@media only screen and (max-width: 1084px) {
+  .inputField {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 7px;
+  }
+  .mainForm {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100%;
+    margin: 0;
+  }
+  .imageSide {
+    width: 100%;
+  }
+  .loginSide {
+    width: 100%;
+    /* background-color: red; */
+    padding: 4%;
+  }
+  .h1 {
+    margin: -1% 0 3% 0;
+    font-size: 0.9rem;
+  }
+
+  .p {
+    display: none;
+    font-size: 0.8rem;
+  }
+  .paraMobile {
+    display: flex;
+    margin-bottom: 3%;
+  }
+
+  .image {
+    width: 100%;
+  }
+  .inputField {
+    width: 95%;
+    font-size: small;
+  }
+  .loginButton {
+    width: 95%;
+  }
+  .LoginContent {
+    margin-bottom: 3%;
+    font-weight: bold;
+  }
+  .forPass {
+    margin-bottom: -4%;
+    margin-right: 7%;
+  }
+  .hidePassowrd {
+    position: absolute;
+    right: 7%;
+    top: 13%;
+  }
+}
