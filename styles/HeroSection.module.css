@@ -2,13 +2,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
-  margin: auto;
+  margin: 3% auto;
 }
 .TextContent {
   margin-top: 50px;
   font-size: 2rem;
-  line-height: 50.82px;
+  line-height: 80.82px;
 }
 
 .subTitle {
@@ -17,15 +16,15 @@
 }
 
 .photo {
-  height: 701px;
-  width: 634;
+  height: 600px;
+  width: 780px;
 }
 
 .blueWord {
   color: #03c4ff;
 }
 .button {
-  width: 60%;
+  width: 336px;
   background-color: #03c4ff;
   padding: 12px 8px;
   font-size: 1.2rem;
@@ -39,4 +38,5 @@
   display: inline-block;
 }
 .button:hover {
+  background-color: rgb(13, 22, 136);
 }
