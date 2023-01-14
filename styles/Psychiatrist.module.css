@@ -1,0 +1,12 @@
+.addPsychiatrist:hover {
+  background-color: rgb(13, 22, 136);
+}
+.addPsychiatrist {
+  padding: 10px 20px;
+  background-color: #03c4ff;
+  color: white;
+  border: 0;
+  border-radius: 8px;
+  transition: background 0.3s ease-in;
+  margin-top: 20px;
+}

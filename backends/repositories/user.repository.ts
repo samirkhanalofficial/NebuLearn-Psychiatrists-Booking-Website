@@ -27,6 +27,13 @@ class UserRepository {
     const user = await User.findOne({ email }).select("role");
     return user;
   };
+  addPsychiatristsImage = async (id: string, image: string) => {
+    const psychiatrists = await User.findById(id);
+    if (!psychiatrists) return null;
+    if (psychiatrists.role != "psychiatrists") return null;
+    await User.findByIdAndUpdate(id, { image });
+    return psychiatrists;
+  };
 }
 let userRepository = new UserRepository();
 

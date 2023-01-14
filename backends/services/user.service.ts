@@ -24,6 +24,10 @@ class UserService {
     const user = await this.userRepository.getRole(email);
     return user;
   };
+  addPsychiatristsImage = async (id: string, image: string) => {
+    const product = await this.userRepository.addPsychiatristsImage(id, image);
+    return product;
+  };
 }
 
 let userService = new UserService(userRepository);

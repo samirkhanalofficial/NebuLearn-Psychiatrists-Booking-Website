@@ -5,3 +5,9 @@
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif !important;
 }
+
+.row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
