@@ -57,16 +57,17 @@ class MeditationController {
 
     if (token) {
       const verified = (await this.authService.verifyToken(token))!;
-      console.log(verified.id);
       if (verified) {
-        // const { error, value } = AddMedValidation.validate(req.body);
         const asyncRole = await this.authService.verifyToken(token);
         const role = asyncRole?.role;
+
         if (role == "admin") {
-          if (!req.query._id) {
+          if (!req.query.id) {
             return res.json({ message: "id needed" });
+          } else {
+            await this.medService.deleteMed(req.query.id.toString());
+            res.json({ message: "success" });
           }
-          await this.medService.deleteMed(req.query._id.toString());
         } else {
           res.json({
             message: "you are not admin",
