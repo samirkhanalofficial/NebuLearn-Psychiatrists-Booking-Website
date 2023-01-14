@@ -10,8 +10,7 @@ export default function Card(props: { title: string; src: string }) {
           width="400"
           height="350"
           allowFullScreen
-          src="https://www.youtube.com/embed/HodvWo8JzHY"
-          title="YouTube video player"
+          src={props.src}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         ></iframe>
       </div>
