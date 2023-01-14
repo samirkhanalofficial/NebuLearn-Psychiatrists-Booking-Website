@@ -25,3 +25,27 @@
 .blueWord {
   color: #03c4ff;
 }
+@media only screen and (max-width: 720px) {
+  .mainForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 15px;
+  }
+  .TextContent {
+    margin-top: 5px;
+    font-size: 1.1rem;
+    line-height: 43.82px;
+  }
+  .subTitle {
+    margin-top: 14px;
+    font-size: 0.9rem;
+    line-height: 25.82px;
+  }
+  .photo {
+    margin-top: 10px;
+    height: 400px;
+    width: 580px;
+  }
+}
