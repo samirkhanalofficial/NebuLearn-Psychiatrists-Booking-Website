@@ -7,8 +7,9 @@
 }
 .h1 {
   display: inline-block;
-  margin-left: 9%;
-  font-size: 2rem;
+  margin-left: 9.7%;
+  margin-top: 40px;
+  font-size: 2.1rem;
 }
 .blueWord {
   color: #03c4ff;
