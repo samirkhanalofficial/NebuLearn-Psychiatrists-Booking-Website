@@ -5,7 +5,7 @@ import Link from "next/link";
 import style from "../styles/Nav.module.css";
 import { AiFillHome, AiFillMedicineBox } from "react-icons/ai";
 import { GiDoctorFace, GiMeditation, GiHamburgerMenu } from "react-icons/gi";
-export default function Nav() {
+export default function Nav({ route }: { route: string }) {
   const [navOpen, toggleNav] = useState(false);
   return (
     <>
@@ -31,7 +31,7 @@ export default function Nav() {
         >
           <ul className={style.navbar}>
             <li>
-              <Link href={"/"}>
+              <Link className={route == "/" ? style.active : ""} href={"/"}>
                 <AiFillHome /> Home
               </Link>
             </li>
