@@ -23,9 +23,6 @@ export default function HeroSection(props: {
             <span className={style.blueWord}> {props.lastWord}</span>
           </h1>
           <p className={style.subTitle}>{props.subTitle}</p>
-          <div>
-            <button className={style.button}>Get Started</button>
-          </div>
         </div>
         <div className={style.imageContent}>
           <Image

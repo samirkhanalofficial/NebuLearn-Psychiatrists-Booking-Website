@@ -2,6 +2,7 @@ import Head from "next/head";
 import Nav from "../components/Nav";
 import { useRouter } from "next/router";
 import HeroSection from "@/components/HeroSection";
+import style from "../styles/index.module.css";
 
 // RedHat, smartcontract in solidity
 export default function Home() {
@@ -30,6 +31,9 @@ export default function Home() {
           </>
           src="/brain.png"
         />
+        <div>
+          <button className={style.button}>Get Started</button>
+        </div>
       </div>
     </>
   );
