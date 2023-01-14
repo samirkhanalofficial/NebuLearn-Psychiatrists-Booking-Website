@@ -12,7 +12,7 @@ const AddUserValidation = Joi.object({
     email: Joi.string().email().min(3).max(255).required(),
     password: Joi.string().min(8).required(),
     confirmPassword: Joi.string().valid(Joi.ref('password')).required(),
-    age: Joi.number().min(1).max(3).required()
+    age: Joi.number().min(15).max(99).required()
 
 });
 
