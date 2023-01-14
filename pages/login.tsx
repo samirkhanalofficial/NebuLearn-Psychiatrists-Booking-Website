@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import Nav from "@/components/Nav";
 import Head from "next/head";
+import Image from "next/image";
 
 export default function Login() {
   const router = useRouter();
@@ -44,7 +45,7 @@ export default function Login() {
     setshowPassword(!showPassword);
   }
   const imageLogin =
-    "https://images.pexels.com/photos/8297218/pexels-photo-8297218.jpeg?auto=compress&cs=tinysrgb&w=1600";
+    "https://images.pexels.com/photos/7579315/pexels-photo-7579315.jpeg?auto=compress&cs=tinysrgb&w=1600";
 
   return (
     <>
@@ -59,11 +60,12 @@ export default function Login() {
           </div>
           <div>
             <h4 className={style.p}>
-              Plan, organize, and collaborate on any project with powerful task
-              management that can be customized for every need.
+              Improve your mental health, spirituality and livings with
+              NebulaCare
             </h4>
             <h4 className={style.paraMobile + " " + style.p}>
-              Plan, organize, and manage any project
+              Improve your mental health, spirituality and livings with
+              NebulaCare
             </h4>
           </div>
           <div className={style.LoginContent}>Email</div>

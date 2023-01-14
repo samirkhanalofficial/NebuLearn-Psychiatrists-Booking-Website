@@ -81,7 +81,7 @@ class AuthController {
         return res.status(400).json({ message: "Invalid email or password" });
       const roleVal = await this.userService.getRole(value.email);
       const role = roleVal.role;
-      if (role == "user") {
+      if (role != "admin") {
         return res.status(400).json({ message: "Invalid email or password" });
       }
       const token = await this.authService.generateToken(user);
