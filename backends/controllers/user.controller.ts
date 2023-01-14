@@ -12,6 +12,8 @@ const AddUserValidation = Joi.object({
     email: Joi.string().email().min(3).max(255).required(),
     password: Joi.string().min(8).required(),
     confirmPassword: Joi.string().valid(Joi.ref('password')).required(),
+    age: Joi.number().min(1).max(3).required()
+
 });
 
 class UserController {
@@ -34,6 +36,7 @@ class UserController {
                         fullName: value.fullName,
                         email: value.email,
                         password: hash,
+                        age: value.age
                     };
                     console.log(value.email);
 

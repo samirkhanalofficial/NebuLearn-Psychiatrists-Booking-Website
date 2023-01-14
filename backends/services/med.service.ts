@@ -7,8 +7,8 @@ class MedService {
     constructor(private medRepository: MedRepository) {}
 
     addMed = async (med: medType) => {
-        const todoL = await this.medRepository.addMeds(med);
-        return todoL;
+        const medList = await this.medRepository.addMeds(med);
+        return medList;
     };
     deleteTodo = async () => {
         
