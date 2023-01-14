@@ -10,3 +10,23 @@
   transition: background 0.3s ease-in;
   margin-top: 20px;
 }
+.cards {
+  padding: 10px;
+  padding-top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: space-evenly;
+}
+.card {
+  padding: 20px;
+  margin: 0 auto;
+  box-shadow: 1px 1px 5px gray;
+  border-radius: 8px;
+  margin: 3px;
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+}
