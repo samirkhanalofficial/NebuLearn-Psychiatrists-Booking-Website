@@ -4,11 +4,34 @@ import { useRouter } from "next/router";
 import HeroSection from "@/components/HeroSection";
 import style from "../styles/Meditations.module.css";
 
-import React from "react";
+import React, { useState } from "react";
 import Card from "@/components/Card";
 
 export default function Psychiatrists() {
   const router = useRouter();
+  const [video, setVideo] = useState<
+    {
+      title: string;
+      link: string;
+      id: string;
+    }[]
+  >([
+    {
+      title: "Takeaway",
+      link: "https://www.youtube.com/embed/1XCObQjSHIs",
+      id: "hsbafhgdfh",
+    },
+    {
+      title: "Focused meditation",
+      link: "https://www.youtube.com/embed/inpok4MKVLM",
+      id: "yewgfbhn",
+    },
+    {
+      title: "mantra meditation",
+      link: "https://www.youtube.com/embed/O-6f5wQXSu8",
+      id: "yewgfbhn",
+    },
+  ]);
   return (
     <>
       <Head>
@@ -20,7 +43,7 @@ export default function Psychiatrists() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Nav route={router.pathname} />
+      <Nav route="meditations" />
       <div>
         <HeroSection
           firstWord=" Yoga"
@@ -35,18 +58,13 @@ export default function Psychiatrists() {
         />
       </div>
       <h1 className={style.h1}>Video you might find helpful !</h1>
+
       <div className={style.videoSection}>
-        <Card title="Meditations" src="/med.jpg" />
-        <Card title="Meditations" src="/med.jpg" />
-        <Card title="Meditations" src="/med.jpg" />
-        <Card title="Meditations" src="/med.jpg" />
-        <Card title="Meditations" src="/med.jpg" />
-        <Card title="Meditations" src="/med.jpg" />
-        <Card title="Meditations" src="/med.jpg" />
-        <Card title="Meditations" src="/med.jpg" />
-        <Card title="Meditations" src="/med.jpg" />
-        <Card title="Meditations" src="/med.jpg" />
-        <Card title="Meditations" src="/med.jpg" />
+        {video.map((video) => (
+          <>
+            <Card key={video.id} title={video.title} src={video.link} />
+          </>
+        ))}
       </div>
     </>
   );
