@@ -4,6 +4,7 @@ import mongooseService from "../services/mongoose.service";
 import { UserService, userService } from "../services/user.service";
 import { userType } from "../types/user.type";
 import bcrypt from "bcrypt";
+import { AuthService, authService } from "../services/auth.service";
 
 // Define the password validation schema
 
@@ -16,7 +17,10 @@ const AddUserValidation = Joi.object({
 });
 
 class UserController {
-  constructor(private userService: UserService) {
+  constructor(
+    private userService: UserService,
+    private authService: AuthService
+  ) {
     mongooseService;
   }
 
@@ -56,6 +60,7 @@ class UserController {
       res.status(400).json({ message: "some problems occured" });
     }
   };
+
   addPsychiatrists = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const { error, value } = AddUserValidation.validate(req.body);
@@ -92,6 +97,7 @@ class UserController {
       res.status(400).json({ message: "some problems occured" });
     }
   };
+
   addAdmin = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const { error, value } = AddUserValidation.validate(req.body);
@@ -128,6 +134,52 @@ class UserController {
       res.status(400).json({ message: "some problems occured" });
     }
   };
+
+  getList = async (req: NextApiRequest, res: NextApiResponse) => {
+    try {
+      const token = req.headers.authorization;
+      if (!token) res.json({ message: "Please log in first" });
+      const verified = await this.authService.verifyToken(token!);
+      if (!verified) res.json({ message: "not the valid user" });
+      const role = verified!.role;
+      const options = req.query.role;
+      if ((options == "admin" || options == "user") && role != "admin") {
+        return res.status(400).json({ message: "No permission" });
+      }
+      const getUser = await this.userService.getList(options!.toString());
+      return res.status(200).json(getUser);
+    } catch (e) {
+      res.status(400).json({ message: "some problems occured" });
+    }
+  };
+
+  deleteUser = async (req: NextApiRequest, res: NextApiResponse) => {
+    try {
+      const token = req.headers.authorization;
+      if (!token) {
+        res.json({ message: "Please Login first" });
+      }
+      const verified = await this.authService.verifyToken(token!);
+      if (!verified) {
+        res.json({ message: "user not verified" });
+      }
+      const role = verified!.role;
+      if (role == "admin") {
+        if (!req.query.id) {
+          return res.json({ message: "id needed" });
+        } else {
+          await this.userService.deleteUser(req.query.id.toString());
+          res.json({ message: "success" });
+        }
+      } else {
+        res.json({
+          message: "you are not admin",
+        });
+      }
+    } catch (e) {
+      res.status(400).json({ message: e });
+    }
+  };
 }
 
-export const userController = new UserController(userService);
+export const userController = new UserController(userService, authService);

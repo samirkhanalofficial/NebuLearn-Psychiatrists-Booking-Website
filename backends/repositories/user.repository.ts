@@ -34,6 +34,13 @@ class UserRepository {
     await User.findByIdAndUpdate(id, { image });
     return psychiatrists;
   };
+  getList = async (role: string) => {
+    const user = await User.find({ role });
+    return user;
+  };
+  deleteUser = async (id: string) => {
+    await User.findOneAndDelete({ _id: id });
+  };
 }
 let userRepository = new UserRepository();
 

@@ -28,6 +28,13 @@ class UserService {
     const product = await this.userRepository.addPsychiatristsImage(id, image);
     return product;
   };
+  getList = async (role: string) => {
+    const list = await this.userRepository.getList(role);
+    return list;
+  };
+  deleteUser = async (id: string) => {
+    await this.userRepository.deleteUser(id);
+  };
 }
 
 let userService = new UserService(userRepository);
