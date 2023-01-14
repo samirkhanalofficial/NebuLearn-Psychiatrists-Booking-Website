@@ -1,37 +1,40 @@
 import Joi from 'joi';
 import { NextApiRequest, NextApiResponse } from 'next';
 import mongooseService from '../services/mongoose.service';
-import { medService, MedService } from '../services/med.service';
-import { medType } from '../types/med.type';
+import { meditationService, MeditationService } from '../services/meditation.service';
+import { meditationType } from '../types/meditation.type';
 import { AuthService, authService } from '../services/auth.service';
 
 const AddMedValidation = Joi.object({
-    name: Joi.string().min(3).max(255).required(),
-    expiryDate: Joi.string(),
+    title: Joi.string().min(3).max(255).required(),
+    link: Joi.string().required(),
 });
-let medList: medType[] = [];
-class TodoController {
+let medList: meditationType[] = [];
+class MeditationController {
     constructor(
-        private medService: MedService,
+        private medService: MeditationService,
         private authService: AuthService
-    ) 
-    {
+    ) {
         mongooseService;
     }
 
-    addMedicine = async (req: NextApiRequest, res: NextApiResponse) => {
+    addMeditation = async (req: NextApiRequest, res: NextApiResponse) => {
         // { title , desc , date}
         const token = req.headers.authorization;
 
         if (token) {
             const verified = (await this.authService.verifyToken(token))!;
-            const { error, value } = AddMedValidation.validate(req.body);
-            const updatedValue = { email: verified.email, ...value };
+
             if (verified) {
+                const { error, value } = AddMedValidation.validate(req.body);
+                const asyncRole = await this.authService.verifyToken(token);
+                const role = asyncRole?.role;
                 if (error)
                     return res.status(400).json({ message: error.message });
-                const medList = await this.medService.addMed(updatedValue);
-                res.json(medList);
+                if (role == 'admin') {
+                    const medList = await this.medService.addMed(value);
+                    res.json(medList);
+                }
             } else {
                 res.json({
                     message: 'Invalid Token!!!',
@@ -45,9 +48,6 @@ class TodoController {
     };
 }
 
-    // show list
-    //   getmyList (email
-    
 
 
-export const todoController = new TodoController(medService, authService);
+export const meditationController = new MeditationController(meditationService, authService);
