@@ -1,0 +1,42 @@
+.mainForm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: auto;
+}
+.TextContent {
+  margin-top: 50px;
+  font-size: 2rem;
+  line-height: 50.82px;
+}
+
+.subTitle {
+  font-size: 1.5rem;
+  line-height: 40.82px;
+}
+
+.photo {
+  height: 701px;
+  width: 634;
+}
+
+.blueWord {
+  color: #03c4ff;
+}
+.button {
+  width: 60%;
+  background-color: #03c4ff;
+  padding: 12px 8px;
+  font-size: 1.2rem;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  color: #f0f8ff;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in;
+  align-content: center;
+  display: inline-block;
+}
+.button:hover {
+}
