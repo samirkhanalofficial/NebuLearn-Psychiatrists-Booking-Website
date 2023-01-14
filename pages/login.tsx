@@ -6,6 +6,7 @@ import FormLayout from "../components/Formlayout";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import Nav from "@/components/Nav";
+import Head from "next/head";
 
 export default function Login() {
   const router = useRouter();
@@ -27,7 +28,7 @@ export default function Login() {
           console.log(loginResult.token);
           await localStorage.setItem("token", loginResult.token);
           toast.success("Login Success");
-          router.push("/dashboard");
+          router.push("/");
         }
       } else {
         toast.error("Email or Password you entered is incorrect");
@@ -47,6 +48,9 @@ export default function Login() {
 
   return (
     <>
+      <Head>
+        <title>Login</title>
+      </Head>
       <Nav route="" />
       <FormLayout image={imageLogin}>
         <>
@@ -91,9 +95,7 @@ export default function Login() {
               />
             )}
           </div>
-          <p className={style.forPass}>
-            <b>Forgot Password?</b>
-          </p>
+
           <button className={style.loginButton} onClick={userLogin}>
             Login
           </button>

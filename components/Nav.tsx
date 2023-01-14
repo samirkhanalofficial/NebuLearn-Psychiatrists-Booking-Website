@@ -1,13 +1,26 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import style from "../styles/Nav.module.css";
 import { AiFillHome, AiOutlineGroup } from "react-icons/ai";
 import { GiMeditation, GiHamburgerMenu } from "react-icons/gi";
-import { FaBriefcaseMedical } from "react-icons/fa";
+import { FaBriefcaseMedical, FaRegUserCircle } from "react-icons/fa";
+import { useRouter } from "next/router";
 export default function Nav({ route }: { route: string }) {
   const [navOpen, toggleNav] = useState(false);
+  const router = useRouter();
+  const [isLoggined, changeLoginnedStatus] = useState(false);
+  useEffect(() => {
+    checklogin();
+  }, []);
+  async function checklogin() {
+    const token = await localStorage.getItem("token");
+    console.log(token);
+    if (token) {
+      changeLoginnedStatus(true);
+    }
+  }
   return (
     <>
       <nav className={style.nav}>
@@ -38,7 +51,7 @@ export default function Nav({ route }: { route: string }) {
             </li>
             <li>
               <Link
-                className={route == "/discussions" ? style.active : ""}
+                className={route == "discussions" ? style.active : ""}
                 href={"/discussions"}
               >
                 <AiOutlineGroup /> Discussions
@@ -47,7 +60,7 @@ export default function Nav({ route }: { route: string }) {
 
             <li>
               <Link
-                className={route == "/psychiatrists" ? style.active : ""}
+                className={route == "psychiatrists" ? style.active : ""}
                 href={"/psychiatrists"}
               >
                 <FaBriefcaseMedical /> Psychiatrists
@@ -55,8 +68,8 @@ export default function Nav({ route }: { route: string }) {
             </li>
             <li>
               <Link
-                className={route == "/meditations" ? style.active : ""}
-                href={"/"}
+                className={route == "meditations" ? style.active : ""}
+                href={"/meditations"}
               >
                 <GiMeditation /> Meditations
               </Link>
@@ -65,17 +78,40 @@ export default function Nav({ route }: { route: string }) {
         </div>
 
         <div>
-          <button
-            className={
-              style.getStartedButton +
-              " " +
-              style.animateHeight +
-              " " +
-              (navOpen ? style.showHeightofButton : style.hideHeight)
-            }
-          >
-            Get Started
-          </button>
+          {isLoggined ? (
+            <>
+              <Link
+                href="/profile"
+                className={
+                  style.profile +
+                  " " +
+                  style.animateHeight +
+                  " " +
+                  (navOpen ? style.showHeightofButton : style.hideHeight)
+                }
+              >
+                <FaRegUserCircle
+                  style={{
+                    fontSize: "25px",
+                  }}
+                />
+                My Profile
+              </Link>
+            </>
+          ) : (
+            <button
+              onClick={() => router.push("/login")}
+              className={
+                style.getStartedButton +
+                " " +
+                style.animateHeight +
+                " " +
+                (navOpen ? style.showHeightofButton : style.hideHeight)
+              }
+            >
+              Get Started
+            </button>
+          )}
         </div>
       </nav>
     </>

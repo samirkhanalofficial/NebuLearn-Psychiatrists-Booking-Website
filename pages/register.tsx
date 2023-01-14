@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import FormLayout from "../components/Formlayout";
 import Nav from "@/components/Nav";
+import Head from "next/head";
 export type userType = {
   _id: string;
   fullName: string;
@@ -60,6 +61,9 @@ export default function Register() {
     "https://images.pexels.com/photos/1274260/pexels-photo-1274260.jpeg?auto=compress&cs=tinysrgb&w=600";
   return (
     <>
+      <Head>
+        <title>Login</title>
+      </Head>
       <Nav route="" />
       <form action="" onSubmit={async (event) => RegisterNow(event)}>
         <FormLayout image={imageReg}>
