@@ -6,13 +6,14 @@
 }
 .TextContent {
   margin-top: 50px;
-  font-size: 20px;
-  line-height: 80.82px;
+  font-size: 1.8rem;
+  line-height: 75.82px;
+  margin-bottom: 23px;
 }
 
 .subTitle {
-  font-size: 1.5rem;
-  line-height: 40.82px;
+  font-size: 1.2rem;
+  line-height: 35.82px;
 }
 
 .photo {
