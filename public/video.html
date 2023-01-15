@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video Calling</title>
+  </head>
+  <body>
+    <div class="videoCall">
+      <div class="screen myScreen"></div>
+      <div class="screen remoteScreen"></div>
+    </div>
+    <style>
+      .screen {
+        background-color: red;
+        width: 500px;
+        height: 500px;
+      }
+      .videoCall {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        gap: 50px;
+        align-items: center;
+        justify-content: space-evenly;
+      }
+    </style>
+    <script>
+      var peer = new Peer();
+      var conn = peer.connect("another-peers-id");
+      // on open will be launch when you successfully connect to PeerServer
+      conn.on("open", function () {
+        // here you have conn.id
+        conn.send("hi!");
+      });
+      peer.on("connection", function (conn) {
+        conn.on("data", function (data) {
+          // Will print 'hi!'
+          console.log(data);
+        });
+      });
+      function call() {
+        var getUserMedia =
+          navigator.getUserMedia ||
+          navigator.webkitGetUserMedia ||
+          navigator.mozGetUserMedia;
+        getUserMedia(
+          { video: true, audio: true },
+          function (stream) {
+            var call = peer.call("another-peers-id", stream);
+            call.on("stream", function (remoteStream) {
+              // Show stream in some video/canvas element.
+            });
+          },
+          function (err) {
+            console.log("Failed to get local stream", err);
+          }
+        );
+      }
+      function receive() {
+        var getUserMedia =
+          navigator.getUserMedia ||
+          navigator.webkitGetUserMedia ||
+          navigator.mozGetUserMedia;
+        peer.on("call", function (call) {
+          getUserMedia(
+            { video: true, audio: true },
+            function (stream) {
+              call.answer(stream); // Answer the call with an A/V stream.
+              call.on("stream", function (remoteStream) {
+                // Show stream in some video/canvas element.
+              });
+            },
+            function (err) {
+              console.log("Failed to get local stream", err);
+            }
+          );
+        });
+      }
+    </script>
+  </body>
+</html>

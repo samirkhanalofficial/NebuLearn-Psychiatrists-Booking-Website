@@ -10,6 +10,7 @@ import {
 } from "../services/discussion.service";
 
 import { AuthService, authService } from "../services/auth.service";
+import { userService } from "../services/user.service";
 
 const AddQueValidation = Joi.object({
   question: Joi.string().min(10).max(255).required(),
@@ -87,7 +88,18 @@ class DiscussionController {
       });
     }
   };
-
+  getAllDiscussion = async (req: NextApiRequest, res: NextApiResponse) => {
+    const discussions = await this.discussionService.getAllDiscussion();
+    return res.json(discussions);
+  };
+  getDiscussionById = async (req: NextApiRequest, res: NextApiResponse) => {
+    if (!req.query.postid)
+      return res.status(400).json({ message: "discussion id is required" });
+    const discussions = await this.discussionService.getDiscussionById(
+      req.query?.postid!.toString()
+    );
+    return res.json(discussions);
+  };
   addComment = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       // const { error, value } = AddQueValidation.validate(req.body);

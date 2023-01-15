@@ -24,17 +24,3 @@
 .mybutton:hover {
   background-color: rgb(13, 22, 136);
 }
-
-.screen {
-  background-color: black;
-  width: 500px;
-  height: 500px;
-}
-.videoCall {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  gap: 50px;
-  align-items: center;
-  justify-content: space-evenly;
-}
