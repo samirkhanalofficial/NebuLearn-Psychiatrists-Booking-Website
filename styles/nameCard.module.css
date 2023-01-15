@@ -1,0 +1,29 @@
+.main {
+  width: 30%;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  margin: 0 auto;
+  cursor: pointer;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.button {
+  width: 343px;
+  background-color: #03c4ff;
+  padding: 12px 8px;
+  font-size: 1.2rem;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  color: #f0f8ff;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in;
+  align-content: center;
+  display: inline-block;
+  margin: 0 auto;
+}
+.button:hover {
+  background-color: rgb(13, 22, 136);
+}
