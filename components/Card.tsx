@@ -14,9 +14,9 @@ export default function Card(props: { title: string; src: string }) {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         ></iframe>
       </div>
-      <div className={style.title}>
+      <p className={style.title}>
         <b>Title :</b> {props.title}
-      </div>
+      </p>
     </div>
   );
 }

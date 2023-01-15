@@ -20,7 +20,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Nav route={router.pathname} />
-      <div>
+      <div className={style.documentSection}>
         <HeroSection
           firstWord=" Brilliant"
           firstLine=" things happen"

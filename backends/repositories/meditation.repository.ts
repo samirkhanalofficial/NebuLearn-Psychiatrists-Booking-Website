@@ -17,7 +17,7 @@ class MeditationRepository {
   };
 
   getList = async () => {
-    const list = await Meditation.findOne({});
+    const list = await Meditation.find({});
     return list;
   };
 }

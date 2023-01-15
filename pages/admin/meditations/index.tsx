@@ -17,13 +17,14 @@ export default function Dashboard() {
     }[]
   >([]);
   async function getMeditations() {
-    var res = await fetch("/api/admins/meditation/get", {
+    var res = await fetch("/api/admin/meditation", {
       headers: {
         "Content-Type": "application/json",
       },
     });
     if (res.status == 200) {
       const data = await res.json();
+      console.log(data);
       setMeditations(data);
     } else {
       toast.error("error getting datas");
@@ -68,7 +69,7 @@ export default function Dashboard() {
                 onClick={async () => {
                   const token = await localStorage.getItem("AdminToken");
                   var res = await fetch(
-                    "/api/admin/meditation/delete" + meditation._id,
+                    "/api/admin/meditation/delete/" + meditation._id,
                     {
                       method: "DELETE",
                       headers: {
