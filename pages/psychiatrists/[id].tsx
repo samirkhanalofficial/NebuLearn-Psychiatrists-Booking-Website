@@ -95,6 +95,7 @@ export default function Register() {
               Please pay by scanning manually. Our admin will approve your
               appoinments after payments.
               <br />
+              <br /> <br /> <br />
               <Link href="/profile" className="mybutton">
                 Done
               </Link>

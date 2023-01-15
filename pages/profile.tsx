@@ -1,9 +1,10 @@
 import Nav from "@/components/Nav";
+import { string } from "joi";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { FaRegUserCircle } from "react-icons/fa";
+import { FaRegUserCircle, FaVideo } from "react-icons/fa";
 import { toast } from "react-toastify";
 import style from "../styles/Discussion.module.css";
 
@@ -15,6 +16,8 @@ type appoinmentType = {
   time: string;
   price: string;
   clientAge: number;
+  doctorName: string;
+  clientName: string;
   medicines: string[];
   paid: boolean;
   __v: number;
@@ -112,6 +115,8 @@ export default function Profile() {
           {appoinments.map((appoinment) => (
             <>
               <div key={appoinment._id} className={style.discussion}>
+                <b>Dr. {appoinment.doctorName}</b>
+                <br />
                 <b>{appoinment.date}</b>
 
                 <p>{appoinment.time}</p>
@@ -120,9 +125,32 @@ export default function Profile() {
                 <p>Price: Rs. {appoinment.price}</p>
                 <p>Reference: {appoinment._id}</p>
                 <br />
-                <Link href={"/samirQr.jpg"}>See Qr</Link>
+                <Link
+                  className="mybutton"
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "5px",
+                  }}
+                  href={"/samirQr.jpg"}
+                >
+                  See Qr
+                </Link>
                 {appoinment.paid ? (
-                  <Link href={"/appoinment/" + appoinment._id}>join</Link>
+                  <Link
+                    className="mybutton"
+                    href={"/videocall/" + appoinment._id}
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      gap: "5px",
+                    }}
+                    onClick={async () => {}}
+                  >
+                    join <FaVideo />
+                  </Link>
                 ) : (
                   "Unpaid(you must pay to connect)"
                 )}

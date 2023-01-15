@@ -28,6 +28,14 @@ const MeetingSchema = new mongoose.Schema({
   medicines: {
     type: [String],
   },
+  clientName: {
+    type: String,
+    required: true,
+  },
+  doctorName: {
+    type: String,
+    required: true,
+  },
   paid: {
     type: Boolean,
     required: true,

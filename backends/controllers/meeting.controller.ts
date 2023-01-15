@@ -33,6 +33,8 @@ class MeetingController {
       price: doctor.price,
       client: payload.id,
       doctor: value.doctor,
+      clientName: user.fullName,
+      doctorName: doctor.fullName,
     });
     if (!meeting)
       return res.status(400).json({ message: "Error adding meeting" });

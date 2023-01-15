@@ -5,5 +5,7 @@ export type MeetingType = {
   time: string;
   price: number;
   clientAge: number;
+  clientName: string;
+  doctorName: string;
   paid?: boolean;
 };

@@ -25,9 +25,9 @@ export default function Login() {
         const loginResult: { token: string } = await result.json();
         if (loginResult.token) {
           console.log(loginResult.token);
-          await localStorage.setItem("AdminToken", loginResult.token);
+          await localStorage.setItem("PsyToken", loginResult.token);
           toast.success("Login Success");
-          router.push("/psychiatrists/dashboard");
+          router.push("/doctor/dashboard");
         }
       } else {
         toast.error("Email or Password you entered is incorrect");
