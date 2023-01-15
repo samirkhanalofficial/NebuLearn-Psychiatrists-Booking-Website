@@ -13,5 +13,5 @@ const discussionSchema = new mongoose.Schema({
 });
 
 
-const Discussion = mongoose.models.Meditation || mongoose.model("Discussion", discussionSchema);
+const Discussion = mongoose.models.Discussion || mongoose.model("Discussion", discussionSchema);
 export default Discussion;
