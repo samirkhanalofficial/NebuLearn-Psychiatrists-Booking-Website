@@ -42,3 +42,12 @@
   top: 100%;
   width: 100%;
 }
+@media only screen and (max-width: 720px) {
+  .logoSection {
+    margin-top: 25px;
+    font-size: 1.3rem;
+    padding-top: px;
+    color: aliceblue;
+    gap: 3%;
+  }
+}

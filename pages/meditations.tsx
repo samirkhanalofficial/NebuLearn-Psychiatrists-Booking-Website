@@ -70,7 +70,10 @@ export default function Psychiatrists() {
           </>
         ))}
       </div>
-      <Footer />
+      <div className={style.footer}>
+        <div className={style.dommy}>{""}</div>
+        <Footer />
+      </div>
     </div>
   );
 }

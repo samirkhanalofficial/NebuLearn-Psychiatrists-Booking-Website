@@ -16,3 +16,30 @@
   position: relative;
   height: 100%;
 }
+.dommy {
+  height: 50px;
+}
+.footer {
+  margin-top: 50px;
+}
+
+@media only screen and (max-width: 720px) {
+  .videoSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    margin: 0 auto;
+    width: 100%;
+    gap: 30px;
+  }
+  .h1 {
+    display: inline-block;
+    margin: 40px 7%;
+    font-size: 1.1rem;
+  }
+  .main {
+    position: relative;
+    width: 100%;
+  }
+}
