@@ -27,7 +27,7 @@
     display: grid;
     grid-template-columns: repeat(1, auto);
     row-gap: 3%;
-    width: 100%;
+    /* width: 100%; */
   }
   .h1 {
     display: inline-block;
