@@ -16,7 +16,10 @@ export default function Footer() {
       <div className={style.footer}>
         <div className={style.logoSection}>
           <div className={style.iconlogo}>
-            <Link href="https://www.facebook.com/profile.php?id=100004349836670">
+            <Link
+              href="https://www.facebook.com/profile.php?id=100004349836670"
+              className={style.link}
+            >
               <FaFacebookF />
             </Link>
           </div>
