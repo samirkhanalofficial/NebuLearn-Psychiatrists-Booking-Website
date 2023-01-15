@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   age: { type: Number, required: true },
   role: { type: String, required: true, default: "user" },
   image: { type: String, default: "" },
+  price: { type: String, default: "0", required: true },
 });
 
 userSchema.methods.matchPassword = async function (password: string) {

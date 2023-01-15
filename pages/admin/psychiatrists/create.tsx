@@ -32,6 +32,7 @@ export default function Register() {
         email: userEmail,
         password: userPassword,
         age: age,
+        amount: price,
         confirmPassword: userConfirmPassword,
       }),
       headers: {
@@ -74,6 +75,7 @@ export default function Register() {
   }
   const [userInfo, setUserInfo] = useState<userType[]>([]);
   const [userName, setUserName] = useState<string>("");
+  const [price, setPrice] = useState<string>("");
   const [age, setAge] = useState<string>("");
   const [userEmail, setUserEmail] = useState<string>("");
   const [userPassword, setUserPassword] = useState<string>("");
@@ -103,6 +105,16 @@ export default function Register() {
                 className={style.inputField}
                 onChange={(event) => setUserName(event.target.value)}
                 value={userName}
+              />
+            </div>
+            <div className={style.LoginContent}>Price</div>
+            <div>
+              <input
+                type="text"
+                placeholder="Price"
+                className={style.inputField}
+                onChange={(event) => setPrice(event.target.value)}
+                value={price}
               />
             </div>
             <div className={style.LoginContent}>Age</div>

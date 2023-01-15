@@ -13,6 +13,7 @@ export default function Dashboard() {
       email: string;
       fullName: string;
       image: string;
+      price: string;
       role: string;
       __v: number;
       _id: string;
@@ -68,6 +69,8 @@ export default function Dashboard() {
               {user.email} <br />
               <b>Age : </b>
               {user.age} <br />
+              <b>Price : </b>Rs.
+              {user.price} <br />
               <Link
                 style={{
                   display: "block",
