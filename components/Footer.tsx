@@ -8,7 +8,7 @@ import {
   AiOutlineCopyrightCircle,
 } from "react-icons/ai";
 import { BsYoutube } from "react-icons/bs";
-import Image from "next/image";
+import { GrUserAdmin } from "react-icons/gr";
 
 export default function Footer() {
   return (
