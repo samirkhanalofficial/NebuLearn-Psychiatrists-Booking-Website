@@ -137,15 +137,7 @@ class UserController {
 
   getList = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-      const token = req.headers.authorization;
-      if (!token) res.json({ message: "Please log in first" });
-      const verified = await this.authService.verifyToken(token!);
-      if (!verified) res.json({ message: "not the valid user" });
-      const role = verified!.role;
       const options = req.query.role;
-      if ((options == "admin" || options == "user") && role != "admin") {
-        return res.status(400).json({ message: "No permission" });
-      }
       const getUser = await this.userService.getList(options!.toString());
       return res.status(200).json(getUser);
     } catch (e) {

@@ -54,7 +54,16 @@ export default function Profile() {
             <b>Name:</b> Samir Khanal
             <br />
             <br />
-            <b>Age:</b>18
+            <b>Age:</b>18 <br />
+            <button
+              onClick={async () => {
+                await localStorage.removeItem("token");
+                router.push("/");
+              }}
+            >
+              {" "}
+              Logout{" "}
+            </button>
           </form>
         </div>
         <div className={style.discussions}>

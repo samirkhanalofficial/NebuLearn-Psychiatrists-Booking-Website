@@ -4,35 +4,38 @@ import { useRouter } from "next/router";
 import HeroSection from "@/components/HeroSection";
 import style from "../styles/Meditations.module.css";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "@/components/Card";
 import Footer from "@/components/Footer";
+import { toast } from "react-toastify";
 
 export default function Psychiatrists() {
   const router = useRouter();
-  const [video, setVideo] = useState<
+  const [meditations, setMeditations] = useState<
     {
       title: string;
       link: string;
-      id: string;
+      __v: number;
+      _id: string;
     }[]
-  >([
-    {
-      title: "Takeaway",
-      link: "https://www.youtube.com/embed/1XCObQjSHIs",
-      id: "hsbafhgdfh",
-    },
-    {
-      title: "Focused meditation",
-      link: "https://www.youtube.com/embed/inpok4MKVLM",
-      id: "yewgfbhn",
-    },
-    {
-      title: "mantra meditation",
-      link: "https://www.youtube.com/embed/O-6f5wQXSu8",
-      id: "yewgfbhn",
-    },
-  ]);
+  >([]);
+  async function getMeditations() {
+    var res = await fetch("/api/admin/meditation", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (res.status == 200) {
+      const data = await res.json();
+      console.log(data);
+      setMeditations(data);
+    } else {
+      toast.error("error getting datas");
+    }
+  }
+  useEffect(() => {
+    getMeditations();
+  }, []);
   return (
     <div className={style.main}>
       <Head>
@@ -61,9 +64,9 @@ export default function Psychiatrists() {
       <h1 className={style.h1}>Video you might find helpful !</h1>
 
       <div className={style.videoSection}>
-        {video.map((video) => (
+        {meditations.map((video) => (
           <>
-            <Card key={video.id} title={video.title} src={video.link} />
+            <Card key={video._id} title={video.title} src={video.link} />
           </>
         ))}
       </div>
