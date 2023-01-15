@@ -50,6 +50,9 @@
 .discussion:hover {
   box-shadow: 1px 1px 6px gray;
 }
+.dommy {
+  height: 50px;
+}
 
 @media only screen and (max-width: 720px) {
   .sections {
