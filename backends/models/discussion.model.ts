@@ -1,17 +1,12 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
-const commentSchema = new mongoose.Schema({
-    question: { type: "string", required: true },
-    email: { type: 'string', required: true },
-
-});
 const discussionSchema = new mongoose.Schema({
-    question: { type: "string", required: true },
-    email: { type: 'string', required: true },
-    comment: [commentSchema]
+  question: { type: "string", required: true },
+  email: { type: "string", required: true },
+  comment: [{ reply: String, email: String }],
 });
 
-
-const Discussion = mongoose.models.Discussion || mongoose.model("Discussion", discussionSchema);
+const Discussion =
+  mongoose.models.Discussion || mongoose.model("Discussion", discussionSchema);
 export default Discussion;
