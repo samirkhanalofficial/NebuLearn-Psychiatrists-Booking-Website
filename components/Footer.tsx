@@ -7,8 +7,8 @@ import {
   AiFillGithub,
   AiOutlineCopyrightCircle,
 } from "react-icons/ai";
-import { BsYoutube } from "react-icons/bs";
-import { GrUserAdmin } from "react-icons/gr";
+import { SiGmail } from "react-icons/si";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -16,19 +16,23 @@ export default function Footer() {
       <div className={style.footer}>
         <div className={style.logoSection}>
           <div className={style.iconlogo}>
-            <FaFacebookF />
+            <Link href="https://www.facebook.com/profile.php?id=100004349836670">
+              <FaFacebookF />
+            </Link>
           </div>
           <div className={style.iconlogo}>
             <AiOutlineTwitter />
           </div>
           <div className={style.iconlogo}>
-            <BsYoutube />
+            <SiGmail />
           </div>
           <div className={style.iconlogo}>
             <AiFillInstagram />
           </div>
           <div className={style.iconlogo}>
-            <AiFillGithub />
+            <Link href="https://github.com/Sumitray1" className={style.link}>
+              <AiFillGithub />
+            </Link>
           </div>
         </div>
         <p className={style.h3}>

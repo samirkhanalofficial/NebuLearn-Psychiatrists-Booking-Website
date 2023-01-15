@@ -40,7 +40,8 @@ export default function Register() {
 
   useEffect(() => {}, []);
   const imageReg =
-    "https://images.pexels.com/photos/1274260/pexels-photo-1274260.jpeg?auto=compress&cs=tinysrgb&w=600";
+    "https://images.pexels.com/photos/7468236/pexels-photo-7468236.jpeg?auto=compress&cs=tinysrgb&w=1600";
+
   return (
     <>
       <Head>
