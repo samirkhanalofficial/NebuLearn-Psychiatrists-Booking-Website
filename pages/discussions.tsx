@@ -65,7 +65,10 @@ export default function Discussions() {
           ))}
         </div>
       </div>
-      <Footer />
+      <div>
+        <div className={style.dommy}>{""}</div>
+        <Footer />
+      </div>
     </>
   );
 }
