@@ -60,10 +60,25 @@ class UserController {
       res.status(400).json({ message: "some problems occured" });
     }
   };
-
+  getPsychiatrists = async (req: NextApiRequest, res: NextApiResponse) => {
+    if (!req.query.psychiatristsId) {
+      return res.status(400).json({ message: "Id Required" });
+    }
+    const user = await this.userService.getUserById(
+      req.query?.psychiatristsId!.toString()
+    );
+    res.status(200).json(user);
+  };
   addPsychiatrists = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-      const { error, value } = AddUserValidation.validate(req.body);
+      const { error, value } = Joi.object({
+        fullName: Joi.string().min(3).max(255).required(),
+        email: Joi.string().email().min(3).max(255).required(),
+        password: Joi.string().min(8).required(),
+        confirmPassword: Joi.string().valid(Joi.ref("password")).required(),
+        age: Joi.number().min(15).max(99).required(),
+        amount: Joi.string().required(),
+      }).validate(req.body);
       if (error) return res.status(400).json({ message: error.message });
 
       bcrypt.hash(
@@ -76,6 +91,7 @@ class UserController {
             email: value.email,
             password: hash,
             age: value.age,
+            price: value.amount,
           };
           console.log(value.email);
 
@@ -94,7 +110,7 @@ class UserController {
         }
       );
     } catch (e) {
-      res.status(400).json({ message: "some problems occured" });
+      return res.status(400).json({ message: "some problems occured" + e });
     }
   };
 
@@ -131,7 +147,7 @@ class UserController {
         }
       );
     } catch (e) {
-      res.status(400).json({ message: "some problems occured" });
+      return res.status(400).json({ message: "some problems occured" });
     }
   };
 
@@ -139,21 +155,33 @@ class UserController {
     try {
       const options = req.query.role;
       const getUser = await this.userService.getList(options!.toString());
+      console.log(getUser);
       return res.status(200).json(getUser);
     } catch (e) {
       res.status(400).json({ message: "some problems occured" });
     }
   };
-
+  getMyDetails = async (req: NextApiRequest, res: NextApiResponse) => {
+    const token = req.headers.authorization;
+    if (!token) {
+      return res.json({ message: "Please Login first" });
+    }
+    const verified = await this.authService.verifyToken(token!);
+    if (!verified) {
+      return res.json({ message: "user not verified" });
+    }
+    const getUser = await this.userService.getUserById(verified.id.toString());
+    return res.status(200).json(getUser);
+  };
   deleteUser = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const token = req.headers.authorization;
       if (!token) {
-        res.json({ message: "Please Login first" });
+        return res.json({ message: "Please Login first" });
       }
       const verified = await this.authService.verifyToken(token!);
       if (!verified) {
-        res.json({ message: "user not verified" });
+        return res.json({ message: "user not verified" });
       }
       const role = verified!.role;
       if (role == "admin") {
@@ -164,12 +192,12 @@ class UserController {
           res.json({ message: "success" });
         }
       } else {
-        res.json({
+        return res.json({
           message: "you are not admin",
         });
       }
     } catch (e) {
-      res.status(400).json({ message: e });
+      return res.status(400).json({ message: e });
     }
   };
 }

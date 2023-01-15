@@ -24,14 +24,17 @@ class MeetingController {
       return res.status(400).json({ message: "Login error" });
     }
     const user = await this.userService.getUserByEmail(payload.email);
+    const doctor = await this.userService.getUserById(value.doctor);
     // Sun Jan 15 2023 06:49:23 GMT+0545 (Nepal Time)'
     const meeting = await this.meetingService.addMeeting({
       clientAge: user.age,
       time: value.time,
       date: value.date,
-      price: 400,
+      price: doctor.price,
       client: payload.id,
       doctor: value.doctor,
+      clientName: user.fullName,
+      doctorName: doctor.fullName,
     });
     if (!meeting)
       return res.status(400).json({ message: "Error adding meeting" });

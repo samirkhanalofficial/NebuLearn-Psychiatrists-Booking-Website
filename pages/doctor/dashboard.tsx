@@ -1,9 +1,10 @@
-import Nav from "@/components/admins/Nav";
+import Nav from "@/components/doctor/Nav";
 import Head from "next/head";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { FaRegUserCircle } from "react-icons/fa";
+import { FaRegUserCircle, FaVideo } from "react-icons/fa";
 import { toast } from "react-toastify";
 import style from "../../styles/Discussion.module.css";
 
@@ -23,13 +24,14 @@ type appoinmentType = {
 };
 export default function Profile() {
   const [name, setName] = useState("");
+  const [image, setImage] = useState("");
   const [email, setEmail] = useState("");
   const [appoinments, setAppoinments] = useState<appoinmentType[]>([]);
   const router = useRouter();
   async function getMyAppoinments() {
-    const token = await localStorage.getItem("AdminToken");
+    const token = await localStorage.getItem("PsyToken");
     const testId = await router.query.id;
-    var res = await fetch("/api/admin/meetings/", {
+    var res = await fetch("/api/admin/meetings/psychiatrist", {
       headers: {
         "Content-Type": "application/json",
         authorization: token || "",
@@ -43,9 +45,9 @@ export default function Profile() {
     }
   }
   async function getUser() {
-    const token = await localStorage.getItem("AdminToken");
+    const token = await localStorage.getItem("PsyToken");
     if (!token) {
-      router.push("/admin/");
+      router.push("/doctor/login");
     }
     var res = await fetch("/api/my-details/", {
       headers: {
@@ -83,14 +85,18 @@ export default function Profile() {
           className={style.discussionForm}
         >
           <form action="">
-            <FaRegUserCircle
-              style={{
-                fontSize: "205px",
-              }}
-            />
+            {image.length < 1 ? (
+              <FaRegUserCircle
+                style={{
+                  fontSize: "205px",
+                }}
+              />
+            ) : (
+              <Image alt="doctor" src={image} />
+            )}
             <br />
             <br />
-            <h2>Hello Admin:</h2> <br />
+            <h2>Hello Doctor:</h2> <br />
             <b>Name:</b> {name}
             <br />
             <br />
@@ -98,8 +104,8 @@ export default function Profile() {
             {email} <br />
             <button
               onClick={async () => {
-                await localStorage.removeItem("token");
-                router.push("/");
+                await localStorage.removeItem("psyToken");
+                router.push("/doctor");
               }}
             >
               {" "}
@@ -109,7 +115,7 @@ export default function Profile() {
         </div>
         <div className={style.discussions}>
           <h2>
-            Appoinments Approvals: <br />
+            Meetings to Join: <br />
             <br />
           </h2>
           {appoinments.map((appoinment) => (
@@ -119,10 +125,7 @@ export default function Profile() {
                 style={{ overflowX: "hidden" }}
                 className={style.discussion}
               >
-                <b>Client: {appoinment.clientName}</b> <br />(
-                {appoinment.client}) <br />
-                <b>Dr. {appoinment.doctorName}</b>
-                <br />({appoinment.doctor})
+                <b>Client: {appoinment.clientName}</b> <br />
                 <br />
                 <b>{appoinment.date}</b>
                 <p>{appoinment.time}</p>
@@ -134,39 +137,19 @@ export default function Profile() {
                 {!appoinment.paid ? (
                   <Link
                     className="mybutton"
-                    href={"#"}
+                    href={"/videocall/" + appoinment._id}
                     style={{
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
                       gap: "5px",
                     }}
-                    onClick={async () => {
-                      const token = await localStorage.getItem("AdminToken");
-                      var res = await fetch(
-                        "/api/admin/meetings/" + appoinment._id + "/verify",
-                        {
-                          method: "POST",
-                          headers: {
-                            "Content-Type": "application/json",
-                            authorization: token || "",
-                          },
-                        }
-                      );
-                      if (res.status != 200) {
-                        toast.error("Error Approving Client");
-                      } else {
-                        toast.success("Client Approved");
-                        setAppoinments(
-                          appoinments.filter((a) => a._id != appoinment._id)
-                        );
-                      }
-                    }}
+                    onClick={async () => {}}
                   >
-                    Approve
+                    join <FaVideo />
                   </Link>
                 ) : (
-                  "Aproved payment"
+                  "UnApproved"
                 )}
               </div>
             </>

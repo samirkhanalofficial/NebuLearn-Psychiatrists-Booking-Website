@@ -14,6 +14,7 @@ export default function Psychiatrists() {
       email: string;
       fullName: string;
       image: string;
+      price: string;
       role: string;
       __v: number;
       _id: string;
@@ -60,6 +61,8 @@ export default function Psychiatrists() {
               {user.email} <br />
               <b>Age : </b>
               {user.age} <br />
+              <b>Price : </b>
+              {user.price} <br />
               <Link
                 className={style.button + " " + style.addPsychiatrist}
                 style={{

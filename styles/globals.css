@@ -11,3 +11,20 @@
   justify-content: space-around;
   align-items: center;
 }
+
+.mybutton {
+  padding: 10px 50px;
+  margin: 10px auto;
+  background: #03c4ff;
+  color: white !important;
+  border-radius: 8px;
+  border: none;
+  transition: all 0.3s ease-in;
+}
+.mybutton:hover {
+  background-color: rgb(13, 22, 136);
+}
+
+.myScreen {
+  background-color: black;
+}
