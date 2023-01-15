@@ -15,11 +15,12 @@
   font-size: 1.5rem;
   line-height: 35.82px;
 }
-
+.imageContent {
+  margin-top: 100px;
+}
 .photo {
-  margin-top: 10px;
-  height: 400px;
-  width: 570px;
+  height: 500px;
+  width: 670px;
 }
 
 .blueWord {
@@ -47,5 +48,8 @@
     margin-top: 10px;
     height: 400px;
     width: 413px;
+  }
+  .imageContent {
+    margin-top: 20px;
   }
 }

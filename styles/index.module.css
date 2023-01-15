@@ -2,8 +2,16 @@
   position: relative;
   height: 960px;
 }
+.documentSection {
+  position: relative;
+}
+.buttonSection {
+  position: absolute;
+  top: 83%;
+  left: 6.5%;
+}
 .button {
-  width: 325px;
+  width: 343px;
   background-color: #03c4ff;
   padding: 12px 8px;
   font-size: 1.2rem;
@@ -22,4 +30,17 @@
 }
 .buttonSection {
   margin-bottom: 200px;
+}
+@media only screen and (max-width: 720px) {
+  .main {
+    position: relative;
+    height: 818px;
+  }
+  .button {
+    margin: 23px 0 0 3%;
+    width: 343px;
+  }
+  .documentSection {
+    position: static;
+  }
 }
