@@ -6,6 +6,9 @@ import style from "../styles/Nav.module.css";
 import { AiFillHome, AiOutlineGroup } from "react-icons/ai";
 import { GiMeditation, GiHamburgerMenu } from "react-icons/gi";
 import { FaBriefcaseMedical, FaRegUserCircle } from "react-icons/fa";
+import { GrUserAdmin } from "react-icons/gr";
+import { RiMentalHealthFill } from "react-icons/ri";
+
 import { useRouter } from "next/router";
 export default function Nav({ route }: { route: string }) {
   const [navOpen, toggleNav] = useState(false);
@@ -72,6 +75,16 @@ export default function Nav({ route }: { route: string }) {
                 href={"/meditations"}
               >
                 <GiMeditation /> Meditations
+              </Link>
+            </li>
+            <li>
+              <Link href={"/admin"}>
+                <GrUserAdmin /> Admin Login
+              </Link>
+            </li>
+            <li>
+              <Link href={"/doctor"}>
+                <RiMentalHealthFill /> psychiatrists Login
               </Link>
             </li>
           </ul>
