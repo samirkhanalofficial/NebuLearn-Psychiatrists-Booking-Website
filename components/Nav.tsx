@@ -84,7 +84,7 @@ export default function Nav({ route }: { route: string }) {
             </li>
             <li>
               <Link href={"/doctor"}>
-                <RiMentalHealthFill /> psychiatrists Login
+                <RiMentalHealthFill /> Psychiatrists Login
               </Link>
             </li>
           </ul>
