@@ -1,12 +1,14 @@
 "use client";
 import Nav from "@/components/Nav";
-import Head from "next/head";
+import head from "next/head";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FaRegUserCircle, FaVideo } from "react-icons/fa";
 import { toast } from "react-toastify";
 import style from "@/styles/Discussion.module.css";
 import { useRouter, useSearchParams } from "next/navigation";
+import Loading from "@/components/loading";
+import NoResult from "@/components/NoResult";
 
 type appoinmentType = {
   _id: string;
@@ -24,14 +26,15 @@ type appoinmentType = {
 };
 export default function Profile() {
   const [name, setName] = useState("");
+  const [loading, setloading] = useState(true);
   const [age, setAge] = useState("");
   const [appoinments, setAppoinments] = useState<appoinmentType[]>([]);
   const router = useRouter();
   const params = useSearchParams();
 
   async function getMyAppoinments() {
+    setloading(true);
     const token = await localStorage.getItem("token");
-    const testId = await params.get("id");
     var res = await fetch("/api/admin/meetings/user", {
       headers: {
         "Content-Type": "application/json",
@@ -40,9 +43,11 @@ export default function Profile() {
     });
     if (res.status != 200) {
       toast.error("Error Fetching Data");
+      setloading(false);
     } else {
       const data = await res.json();
       setAppoinments(data);
+      setloading(false);
     }
   }
   useEffect(() => {
@@ -72,9 +77,9 @@ export default function Profile() {
   }
   return (
     <>
-      <Head>
+      <head>
         <title>My Profile</title>
-      </Head>
+      </head>
       <Nav route="profile" />
       <div style={{ padding: "50px" }}></div>
       <div className={style.sections}>
@@ -87,7 +92,7 @@ export default function Profile() {
           <form action="">
             <FaRegUserCircle
               style={{
-                fontSize: "205px",
+                fontSize: "50px",
               }}
             />
             <br />
@@ -114,51 +119,57 @@ export default function Profile() {
             Appoinments: <br />
             <br />
           </h2>
-          {appoinments.map((appoinment) => (
-            <>
-              <div key={appoinment._id} className={style.discussion}>
-                <b>Dr. {appoinment.doctorName}</b>
-                <br />
-                <b>{appoinment.date}</b>
+          {loading ? (
+            <Loading />
+          ) : appoinments.length <= 0 ? (
+            <NoResult item="Appoinments" />
+          ) : (
+            appoinments.map((appoinment) => (
+              <>
+                <div key={appoinment._id} className={style.discussion}>
+                  <b>Dr. {appoinment.doctorName}</b>
+                  <br />
+                  <b>{appoinment.date}</b>
 
-                <p>{appoinment.time}</p>
-                <br />
-                <br />
-                <p>Price: Rs. {appoinment.price}</p>
-                <p>Reference: {appoinment._id}</p>
-                <br />
-                <Link
-                  className="mybutton"
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: "5px",
-                  }}
-                  href={"/samirQr.jpg"}
-                >
-                  See Qr
-                </Link>
-                {appoinment.paid ? (
+                  <p>{appoinment.time}</p>
+                  <br />
+                  <br />
+                  <p>Price: Rs. {appoinment.price}</p>
+                  <p>Reference: {appoinment._id}</p>
+                  <br />
                   <Link
                     className="mybutton"
-                    href={"/videocall/" + appoinment._id}
                     style={{
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
                       gap: "5px",
                     }}
-                    onClick={async () => {}}
+                    href={"/samirQr.jpg"}
                   >
-                    join <FaVideo />
+                    See Qr
                   </Link>
-                ) : (
-                  "Unpaid(you must pay to connect)"
-                )}
-              </div>
-            </>
-          ))}
+                  {appoinment.paid ? (
+                    <Link
+                      className="mybutton"
+                      href={"/videocall/" + appoinment._id}
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: "5px",
+                      }}
+                      onClick={async () => {}}
+                    >
+                      join <FaVideo />
+                    </Link>
+                  ) : (
+                    "Unpaid(you must pay to connect)"
+                  )}
+                </div>
+              </>
+            ))
+          )}
         </div>
       </div>
     </>

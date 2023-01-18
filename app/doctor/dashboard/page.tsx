@@ -1,7 +1,7 @@
 "use client";
 
 import Nav from "@/components/doctor/Nav";
-import Head from "next/head";
+import head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -73,9 +73,9 @@ export default function Profile() {
 
   return (
     <>
-      <Head>
+      <head>
         <title>Meetings</title>
-      </Head>
+      </head>
       <Nav route="/" />
       <div style={{ padding: "50px" }}></div>
       <div className={style.sections}>

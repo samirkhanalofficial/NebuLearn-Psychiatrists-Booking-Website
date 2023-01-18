@@ -15,7 +15,7 @@ export default function HeroSection(props: {
     <>
       <div className={style.mainForm}>
         <div className={style.TextContent}>
-          <h1 className={style.firstHeading}>
+          <h1 className={style.firstheading}>
             <span className={style.blueWord}>{props.firstWord}</span>{" "}
             {props.firstLine} {props.secondLine}
             <span className={style.blueWord}> {props.lastWord}</span>

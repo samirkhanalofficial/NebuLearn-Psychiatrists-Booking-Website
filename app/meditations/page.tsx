@@ -1,5 +1,5 @@
 "use client";
-import Head from "next/head";
+import head from "next/head";
 import Nav from "@/components/Nav";
 import { useRouter } from "next/navigation";
 import HeroSection from "@/components/HeroSection";
@@ -9,9 +9,12 @@ import React, { useEffect, useState } from "react";
 import Card from "@/components/Card";
 import Footer from "@/components/Footer";
 import { toast } from "react-toastify";
+import Loading from "@/components/loading";
+import NoResult from "@/components/NoResult";
 
 export default function Psychiatrists() {
   const router = useRouter();
+  const [loading, setloading] = useState(true);
   const [meditations, setMeditations] = useState<
     {
       title: string;
@@ -30,8 +33,10 @@ export default function Psychiatrists() {
       const data = await res.json();
       console.log(data);
       setMeditations(data);
+      setloading(false);
     } else {
       toast.error("error getting datas");
+      setloading(false);
     }
   }
   useEffect(() => {
@@ -39,7 +44,7 @@ export default function Psychiatrists() {
   }, []);
   return (
     <div className={style.main}>
-      <Head>
+      <head>
         <title>CodeStorm</title>
         <meta
           name="description"
@@ -47,7 +52,7 @@ export default function Psychiatrists() {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
-      </Head>
+      </head>
       <Nav route="meditations" />
       <div>
         <HeroSection
@@ -65,13 +70,22 @@ export default function Psychiatrists() {
         </HeroSection>
       </div>
       <h1 className={style.h1}>Video you might find helpful !</h1>
+      <br />
 
       <div className={style.videoSection}>
-        {meditations.map((video) => (
-          <>
-            <Card key={video._id} title={video.title} src={video.link} />
-          </>
-        ))}
+        {loading ? (
+          <Loading />
+        ) : meditations.length <= 0 ? (
+          <div>
+            <NoResult item="Videos" />
+          </div>
+        ) : (
+          meditations.map((video) => (
+            <>
+              <Card key={video._id} title={video.title} src={video.link} />
+            </>
+          ))
+        )}
       </div>
       <div className={style.footer}>
         <div className={style.dommy}></div>

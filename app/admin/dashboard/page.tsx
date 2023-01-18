@@ -1,6 +1,6 @@
 "use client";
 import Nav from "@/components/admins/Nav";
-import Head from "next/head";
+import head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -70,9 +70,9 @@ export default function Profile() {
 
   return (
     <>
-      <Head>
+      <head>
         <title>Meetings</title>
-      </Head>
+      </head>
       <Nav route="/" />
       <div style={{ padding: "50px" }}></div>
       <div className={style.sections}>

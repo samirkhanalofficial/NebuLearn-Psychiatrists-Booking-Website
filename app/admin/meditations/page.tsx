@@ -1,6 +1,6 @@
 "use client";
 import Nav from "@/components/admins/Nav";
-import Head from "next/head";
+import head from "next/head";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -35,9 +35,9 @@ export default function Dashboard() {
   }, []);
   return (
     <div>
-      <Head>
+      <head>
         <title>Meditations</title>
-      </Head>
+      </head>
       <Nav route="meditations" />
       <div className="row">
         <h2>Meditations</h2>

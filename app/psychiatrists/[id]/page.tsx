@@ -6,8 +6,10 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import FormLayout from "@/components/Formlayout";
 import Nav from "@/components/Nav";
-import Head from "next/head";
+import head from "next/head";
 import { useRouter, useSearchParams } from "next/navigation";
+import Loading from "@/components/loading";
+import NoResult from "@/components/NoResult";
 export type userType = {
   _id: string;
   fullName: string;
@@ -17,6 +19,7 @@ export type userType = {
   date: string;
 };
 export default function Register({ params }: any) {
+  const [loading, setloading] = useState(true);
   const imageReg =
     "https://images.pexels.com/photos/1274260/pexels-photo-1274260.jpeg?auto=compress&cs=tinysrgb&w=600";
 
@@ -38,15 +41,18 @@ export default function Register({ params }: any) {
     var res = await fetch("/api/psychiatrists/" + testId);
     if (res.status != 200) {
       toast.error("Error Fetching Data");
+      setloading(false);
     } else {
       const data = await res.json();
       setImage(data.image);
       setPrice(data.price);
       setName(data.fullName);
+      setloading(false);
     }
   }
   async function addMeditation(event: any) {
     event.preventDefault();
+    setloading(true);
     const token = await localStorage.getItem("token");
     var res = await fetch("/api/admin/meetings/create", {
       method: "POST",
@@ -62,13 +68,15 @@ export default function Register({ params }: any) {
     });
     if (res.status != 200) {
       toast.error("Error Booking for Appoinments");
+      setloading(false);
     } else {
       const data = await res.json();
       setappoinmentDone(true);
       console.log(data);
       setAppId(data._id);
+      setName(data.fullName);
       setImage("/samirQr.jpg");
-
+      setloading(false);
       toast.success(
         "Appoinment booked. Please pay the shown amount using esewa with remark shown here."
       );
@@ -81,13 +89,17 @@ export default function Register({ params }: any) {
   }, []);
   return (
     <>
-      <Head>
+      <head>
         <title>Add Appoinment</title>
-      </Head>
+      </head>
       <Nav route="psychiatrists" />
       <form action="" onSubmit={async (event) => addMeditation(event)}>
         <FormLayout image={appointmentDone ? "/samirQr.jpg" : image}>
-          {appointmentDone ? (
+          {loading ? (
+            <Loading />
+          ) : !name ? (
+            <NoResult item="Data of psychiatrist" />
+          ) : appointmentDone ? (
             <>
               <div className={style.h1}>
                 <h1>Rs. {price}</h1>

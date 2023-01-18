@@ -1,11 +1,13 @@
 "use client";
 import Footer from "@/components/Footer";
 import Nav from "@/components/Nav";
-import Head from "next/head";
+import head from "next/head";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import style from "@/styles/Discussion.module.css";
+import Loading from "@/components/loading";
+import NoResult from "@/components/NoResult";
 type commentType = { reply: string; email: string; _id: string };
 type discussionType = {
   email: string;
@@ -15,6 +17,10 @@ type discussionType = {
 };
 export default function Discussions({ params }: any) {
   const [query, setQuery] = useState("");
+  const [isloading, setloading] = useState(true);
+
+  const [isPosting, setposting] = useState(false);
+
   const [comment, setcomments] = useState<commentType[]>([]);
   const [discussion, setDiscussion] = useState<discussionType>({
     email: "",
@@ -35,9 +41,11 @@ export default function Discussions({ params }: any) {
     });
     if (res.status != 200) {
       toast.error("Error getting Discussion");
+      setloading(false);
     } else {
       const data = await res.json();
       setcomments(data.comment);
+      setloading(false);
       setDiscussion(data);
     }
   }
@@ -54,9 +62,9 @@ export default function Discussions({ params }: any) {
   }
   return (
     <>
-      <Head>
+      <head>
         <title>Comments</title>
-      </Head>
+      </head>
       <Nav route="discussions" />
       <div className={style.sections}>
         <div className={style.discussionForm}>
@@ -70,6 +78,7 @@ export default function Discussions({ params }: any) {
             action=""
             onSubmit={async (e) => {
               e.preventDefault();
+              setposting(true);
               const token = await localStorage.getItem("token");
               const res = await fetch(
                 "/api/discussion/" + params.id + "/comment",
@@ -83,13 +92,19 @@ export default function Discussions({ params }: any) {
                 }
               );
               if (res.status != 200) {
+                setposting(false);
+
                 toast.error("Error posting Comment");
               } else {
                 const data: commentType = await res.json();
                 console.log(data);
-                setcomments([data, ...comment]);
+                setcomments([
+                  { reply: query, email: "me", _id: "62gvb" },
+                  ...comment,
+                ]);
                 toast.success("Comment Added Successfully");
                 setQuery("");
+                setposting(false);
               }
             }}
           >
@@ -101,7 +116,7 @@ export default function Discussions({ params }: any) {
               id="queries"
               placeholder="Write your Comment here. "
             ></textarea>
-            <button>Submit</button>
+            {isPosting ? <Loading /> : <button>Coment</button>}
           </form>
         </div>
         <div className={style.discussions}>
@@ -109,16 +124,22 @@ export default function Discussions({ params }: any) {
             Recents Comments: <br />
             <br />
           </h2>
-          {comment.map((com) => (
-            <>
-              <div key={com._id} className={style.discussion}>
-                <b>{com.email}</b>
-                <br />
-                <br />
-                <p>{com.reply}</p>
-              </div>
-            </>
-          ))}
+          {isloading ? (
+            <Loading />
+          ) : comment.length <= 0 ? (
+            <NoResult item="Coments" />
+          ) : (
+            comment.map((com) => (
+              <>
+                <div key={com._id} className={style.discussion}>
+                  <b>{com.email}</b>
+                  <br />
+                  <br />
+                  <p>{com.reply}</p>
+                </div>
+              </>
+            ))
+          )}
         </div>
       </div>
       <div>

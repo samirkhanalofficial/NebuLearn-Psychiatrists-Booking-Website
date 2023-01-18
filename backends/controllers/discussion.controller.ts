@@ -28,7 +28,6 @@ class DiscussionController {
   }
   addQue = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-      // const { error, value } = AddQueValidation.validate(req.body);
       const token = req.headers.authorization;
 
       if (!token) {
@@ -36,7 +35,8 @@ class DiscussionController {
       }
       const verified = await this.authService.verifyToken(token!);
       const { error, value } = AddQueValidation.validate(req.body);
-      if (!verified) return res.json({ message: "faulty token" });
+      if (error) return res.status(400).json({ message: error.message });
+      if (!verified) return res.status(400).json({ message: "faulty token" });
 
       const updatedValue: questionType = {
         question: value.question,

@@ -2,14 +2,14 @@
 
 import Nav from "@/components/Nav";
 import React from "react";
-import Head from "next/head";
+import head from "next/head";
 import Image from "next/image";
 export default function NotFound() {
   return (
     <>
-      <Head>
+      <head>
         <title>Page Not Found</title>
-      </Head>
+      </head>
       <Nav route={""} />
       <div
         style={{

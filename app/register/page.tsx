@@ -7,7 +7,8 @@ import { toast } from "react-toastify";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import FormLayout from "@/components/Formlayout";
 import Nav from "@/components/Nav";
-import Head from "next/head";
+import head from "next/head";
+import Loading from "@/components/loading";
 export type userType = {
   _id: string;
   fullName: string;
@@ -24,6 +25,7 @@ export default function Register() {
   }
   async function RegisterNow(event: any) {
     event.preventDefault();
+    setloading(true);
     var user = await fetch("/api/user", {
       method: "POST",
       body: JSON.stringify({
@@ -40,6 +42,7 @@ export default function Register() {
     if (user.status != 200) {
       const userData: { message: string } = await user.json();
       toast.error(userData.message!);
+      setloading(false);
     } else {
       const userData: userType = await user.json();
       toast.success("Registered Successfully");
@@ -49,6 +52,7 @@ export default function Register() {
       setUserPassword("");
       setAge("");
       setUserConfirmPassword("");
+      setloading(false);
     }
   }
   const [userInfo, setUserInfo] = useState<userType[]>([]);
@@ -57,15 +61,15 @@ export default function Register() {
   const [userEmail, setUserEmail] = useState<string>("");
   const [userPassword, setUserPassword] = useState<string>("");
   const [userConfirmPassword, setUserConfirmPassword] = useState<string>("");
-
+  const [loading, setloading] = useState(false);
   useEffect(() => {}, []);
   const imageReg =
     "https://images.pexels.com/photos/7468236/pexels-photo-7468236.jpeg?auto=compress&cs=tinysrgb&w=1600";
   return (
     <>
-      <Head>
-        <title>Login</title>
-      </Head>
+      <head>
+        <title>Register</title>
+      </head>
       <Nav route="" />
       <form action="" onSubmit={async (event) => RegisterNow(event)}>
         <FormLayout image={imageReg}>
@@ -85,7 +89,6 @@ export default function Register() {
             <div className={style.LoginContent}>Full Name</div>
             <div>
               <input
-                minLength={8}
                 type="text"
                 placeholder="Full Name"
                 className={style.inputField}
@@ -155,7 +158,13 @@ export default function Register() {
                 />
               )}
             </div>
-            <button className={style.loginButton}>Create Account</button>
+            {loading ? (
+              <>
+                <Loading />
+              </>
+            ) : (
+              <button className={style.loginButton}>Create Account</button>
+            )}
             <span className="test">
               Already have an account ?
               <Link className={style.forPass} href={"/login"}>

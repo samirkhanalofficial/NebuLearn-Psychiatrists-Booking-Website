@@ -1,6 +1,6 @@
 "use client";
 import Nav from "@/components/admins/Nav";
-import Head from "next/head";
+import head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -40,9 +40,9 @@ export default function Dashboard() {
   }, []);
   return (
     <div>
-      <Head>
+      <head>
         <title>Psychiatrists</title>
-      </Head>
+      </head>
       <Nav route="psychiatrists" />
       <div className="row">
         <h2>Psychiatrists</h2>

@@ -7,7 +7,7 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import FormLayout from "@/components/Formlayout";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import Head from "next/head";
+import head from "next/head";
 
 export default function Login() {
   const router = useRouter();
@@ -49,9 +49,9 @@ export default function Login() {
 
   return (
     <>
-      <Head>
+      <head>
         <title>Login</title>
-      </Head>
+      </head>
       <FormLayout image={imageLogin}>
         <>
           <div className={style.h1}>

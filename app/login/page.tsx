@@ -7,15 +7,20 @@ import FormLayout from "@/components/Formlayout";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Nav from "@/components/Nav";
-import Head from "next/head";
+import head from "next/head";
+import Loading from "@/components/loading";
 
 export default function Login() {
+  const [loading, setloading] = useState(false);
   const router = useRouter();
   //for fetch api
   const [email, setEmail] = useState<string>("");
   const [password, SetPassword] = useState<string>("");
   async function userLogin() {
+    setloading(true);
     try {
+      setloading(true);
+
       let result = await fetch("/api/auth", {
         method: "POST",
         headers: {
@@ -29,13 +34,17 @@ export default function Login() {
           console.log(loginResult.token);
           await localStorage.setItem("token", loginResult.token);
           toast.success("Login Success");
+          setloading(false);
           router.push("/");
         }
+        setloading(false);
       } else {
         toast.error("Email or Password you entered is incorrect");
+        setloading(false);
       }
     } catch (e: any) {
       toast.error(e.toString());
+      setloading(false);
     }
   }
   //for showing and hiding password
@@ -49,9 +58,9 @@ export default function Login() {
 
   return (
     <>
-      <Head>
+      <head>
         <title>Login</title>
-      </Head>
+      </head>
       <Nav route="" />
       <FormLayout image={imageLogin}>
         <>
@@ -98,10 +107,15 @@ export default function Login() {
             )}
           </div>
 
-          <button className={style.loginButton} onClick={userLogin}>
-            Login
-          </button>
-
+          {loading ? (
+            <>
+              <Loading />
+            </>
+          ) : (
+            <button className={style.loginButton} onClick={userLogin}>
+              Login
+            </button>
+          )}
           <span className="test">
             Don&apos;t have an account ?
             <Link className={style.forPass} href={"/register"}>

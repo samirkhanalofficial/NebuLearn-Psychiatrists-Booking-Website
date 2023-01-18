@@ -1,15 +1,19 @@
 "use client";
 import Footer from "@/components/Footer";
 import Nav from "@/components/Nav";
-import Head from "next/head";
+import head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import style from "@/styles/Discussion.module.css";
+import Loading from "@/components/loading";
+import NoResult from "@/components/NoResult";
 
 export default function Discussions() {
   const [query, setQuery] = useState("");
+  const [isloading, setloading] = useState(true);
+  const [isPosting, setposting] = useState(false);
   const [discussions, setDiscussions] = useState<
     {
       email: string;
@@ -31,10 +35,12 @@ export default function Discussions() {
     });
     if (res.status != 200) {
       toast.error("Error getting Discussions");
+      setloading(false);
     } else {
       const data = await res.json();
       console.log(data);
       setDiscussions(data);
+      setloading(false);
     }
   }
   useEffect(() => {
@@ -50,9 +56,9 @@ export default function Discussions() {
   }
   return (
     <>
-      <Head>
+      <head>
         <title>Discussions</title>
-      </Head>
+      </head>
       <Nav route="discussions" />
       <div className={style.sections}>
         <div className={style.discussionForm}>
@@ -60,6 +66,7 @@ export default function Discussions() {
             action=""
             onSubmit={async (e) => {
               e.preventDefault();
+              setposting(true);
               const token = await localStorage.getItem("token");
               const res = await fetch("/api/discussion", {
                 method: "POST",
@@ -70,12 +77,15 @@ export default function Discussions() {
                 body: JSON.stringify({ question: query }),
               });
               if (res.status != 200) {
-                toast.error("Error posting Query");
+                const dis = await res.json();
+                toast.error(dis.message);
+                setposting(false);
               } else {
                 toast.success("Query Added Successfully");
                 setQuery("");
                 const dis = await res.json();
                 setDiscussions([dis, ...discussions]);
+                setposting(false);
               }
             }}
           >
@@ -87,7 +97,7 @@ export default function Discussions() {
               id="queries"
               placeholder="Write your Queries here. "
             ></textarea>
-            <button>Submit</button>
+            {isPosting ? <Loading /> : <button>Post</button>}
           </form>
         </div>
         <div className={style.discussions}>
@@ -95,17 +105,23 @@ export default function Discussions() {
             Recents Queries: <br />
             <br />
           </h2>
-          {discussions.map((discussion) => (
-            <>
-              <div key={discussion._id} className={style.discussion}>
-                <b>{discussion.email}</b>
-                <br />
-                <br />
-                <p>{discussion.question}</p>
-                <Link href={"/discussions/" + discussion._id}>Reply</Link>
-              </div>
-            </>
-          ))}
+          {isloading ? (
+            <Loading />
+          ) : discussions.length <= 0 ? (
+            <NoResult item="Discussions" />
+          ) : (
+            discussions.map((discussion) => (
+              <>
+                <div key={discussion._id} className={style.discussion}>
+                  <b>{discussion.email}</b>
+                  <br />
+                  <br />
+                  <p>{discussion.question}</p>
+                  <Link href={"/discussions/" + discussion._id}>Reply</Link>
+                </div>
+              </>
+            ))
+          )}
         </div>
       </div>
       <div>
