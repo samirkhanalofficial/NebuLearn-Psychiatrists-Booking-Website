@@ -83,13 +83,12 @@ export default function Dashboard() {
                 {user.age} <br />
                 <b>Price : </b>Rs.
                 {user.price} <br />
-                <Link
+                <button
                   style={{
                     display: "block",
                     backgroundColor: "red",
                     width: "120px",
                   }}
-                  href="#"
                   onClick={async () => {
                     const token = await localStorage.getItem("AdminToken");
                     var res = await fetch("/api/admin/delete/" + user._id, {
@@ -110,7 +109,7 @@ export default function Dashboard() {
                 >
                   <FaTrash />
                   Delete
-                </Link>
+                </button>
               </div>
             </>
           ))
