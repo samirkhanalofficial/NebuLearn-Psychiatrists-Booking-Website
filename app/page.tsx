@@ -32,10 +32,11 @@ export default function Home() {
             NebulaCare.
           </>
           src="/brain.png"
-        />
-        <div className={style.buttonSection}>
-          <button className={style.button}>Get Started</button>
-        </div>
+        >
+          <div className={style.buttonSection}>
+            <button className={style.button}>Get Started</button>
+          </div>
+        </HeroSection>
       </div>
       <footer className={style.footer}>
         <Footer />

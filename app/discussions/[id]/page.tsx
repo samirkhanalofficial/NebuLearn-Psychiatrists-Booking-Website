@@ -13,8 +13,7 @@ type discussionType = {
   _id: string;
   comment: commentType[];
 };
-export default function Discussions() {
-  const params = useSearchParams();
+export default function Discussions({ params }: any) {
   const [query, setQuery] = useState("");
   const [comment, setcomments] = useState<commentType[]>([]);
   const [discussion, setDiscussion] = useState<discussionType>({
@@ -27,7 +26,7 @@ export default function Discussions() {
 
   async function getData() {
     const token = await localStorage.getItem("token");
-    const res = await fetch("/api/discussion/" + params.get("id") + "/", {
+    const res = await fetch("/api/discussion/" + params.id + "/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -73,7 +72,7 @@ export default function Discussions() {
               e.preventDefault();
               const token = await localStorage.getItem("token");
               const res = await fetch(
-                "/api/discussion/" + params.get("id") + "/comment",
+                "/api/discussion/" + params.id + "/comment",
                 {
                   method: "POST",
                   headers: {

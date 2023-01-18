@@ -16,7 +16,7 @@ export type userType = {
   confirmPassword: string;
   date: string;
 };
-export default function Register() {
+export default function Register({ params }: any) {
   const imageReg =
     "https://images.pexels.com/photos/1274260/pexels-photo-1274260.jpeg?auto=compress&cs=tinysrgb&w=600";
 
@@ -28,14 +28,13 @@ export default function Register() {
   const [appointmentDone, setappoinmentDone] = useState(false);
   const [time, setTime] = useState("");
   const router = useRouter();
-  const params = useSearchParams();
 
   async function getUser() {
     const token = await localStorage.getItem("token");
     if (!token) {
       router.push("/login");
     }
-    const testId = await params.get("id");
+    const testId = await params.id;
     var res = await fetch("/api/psychiatrists/" + testId);
     if (res.status != 200) {
       toast.error("Error Fetching Data");
@@ -54,7 +53,7 @@ export default function Register() {
       body: JSON.stringify({
         date,
         time,
-        doctor: params.get("id"),
+        doctor: params.id,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -77,6 +76,7 @@ export default function Register() {
   }
 
   useEffect(() => {
+    console.log(params);
     getUser();
   }, []);
   return (

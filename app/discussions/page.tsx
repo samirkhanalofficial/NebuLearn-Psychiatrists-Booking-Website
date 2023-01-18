@@ -74,6 +74,8 @@ export default function Discussions() {
               } else {
                 toast.success("Query Added Successfully");
                 setQuery("");
+                const dis = await res.json();
+                setDiscussions([dis, ...discussions]);
               }
             }}
           >

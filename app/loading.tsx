@@ -9,6 +9,7 @@ export default function Loading() {
       <div
         style={{
           display: "flex",
+          height: "90vh",
           alignItems: "center",
           justifyContent: "center",
         }}

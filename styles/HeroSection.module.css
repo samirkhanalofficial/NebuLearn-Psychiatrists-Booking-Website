@@ -2,12 +2,14 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: 0 30px;
+  padding: 0 0px;
 }
 .TextContent {
+  margin: 0;
   margin-top: 90px;
-  font-size: 1.8rem;
+  font-size: x-large;
   line-height: 75.82px;
+  max-width: 500px;
 }
 
 .subTitle {

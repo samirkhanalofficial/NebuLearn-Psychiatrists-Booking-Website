@@ -60,7 +60,9 @@ export default function Psychiatrists() {
             NebulaCare.
           </>
           src="/yoga.png"
-        />
+        >
+          <></>
+        </HeroSection>
       </div>
       <h1 className={style.h1}>Video you might find helpful !</h1>
 
