@@ -88,7 +88,6 @@ export default function Register() {
           setloading(false);
         }
 
-        setloading(false);
         setUserInfo([userData, ...userInfo]);
         setUserName("");
         setUserEmail("");
@@ -96,7 +95,9 @@ export default function Register() {
         setAge("");
         setUserConfirmPassword("");
         toast.success("psychiatrist Created");
+        setloading(false);
       }
+      setloading(false);
     }
   }
   const [userInfo, setUserInfo] = useState<userType[]>([]);
