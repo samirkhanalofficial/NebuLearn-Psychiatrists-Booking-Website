@@ -49,9 +49,9 @@ const upload = multer({
           Error("Please login with correct credientials.", {
             cause: "Auth required",
           }),
-          path.join(process.cwd(), "public/psychiatrists")
+          path.join(process.cwd(), "public/uploads/psychiatrists")
         );
-      cb(null, path.join(process.cwd(), "public/psychiatrists"));
+      cb(null, path.join(process.cwd(), "public/uploads/psychiatrists"));
     },
     filename: async (req, file, cb) => {
       const fileName = Date.now() + file.originalname;
