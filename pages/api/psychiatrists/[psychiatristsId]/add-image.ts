@@ -60,7 +60,7 @@ const upload = multer({
       mongooseService;
       const psychiatrists = await userService.addPsychiatristsImage(
         req.query.psychiatristsId!.toString(),
-        "/psychiatrists/" + fileName
+        "/uploads/psychiatrists/" + fileName
       );
       if (!psychiatrists) return cb(Error("error adding image"), fileName);
 
