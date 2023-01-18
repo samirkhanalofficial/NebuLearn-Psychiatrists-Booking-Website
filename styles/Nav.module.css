@@ -83,7 +83,7 @@
     transition: height 1s;
   }
   .showHeight {
-    height: 200px !important;
+    height: 300px !important;
   }
   .showHeightofButton {
     height: auto !important;

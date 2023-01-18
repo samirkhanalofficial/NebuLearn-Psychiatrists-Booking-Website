@@ -3,6 +3,7 @@ import React, { ReactNode } from "react";
 import Image from "next/image";
 import style from "../styles/HeroSection.module.css";
 export default function HeroSection(props: {
+  children: React.ReactNode;
   firstLine: string;
   secondLine: string;
   subTitle: ReactNode;
@@ -16,13 +17,12 @@ export default function HeroSection(props: {
         <div className={style.TextContent}>
           <h1 className={style.firstHeading}>
             <span className={style.blueWord}>{props.firstWord}</span>{" "}
-            {props.firstLine}
-          </h1>
-          <h1 className={style.firstHeading}>
-            {props.secondLine}
+            {props.firstLine} {props.secondLine}
             <span className={style.blueWord}> {props.lastWord}</span>
           </h1>
+
           <p className={style.subTitle}>{props.subTitle}</p>
+          {props.children}
         </div>
         <div className={style.imageContent}>
           <Image

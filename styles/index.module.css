@@ -1,14 +1,8 @@
 .main {
   position: relative;
-  height: 777px;
 }
 .documentSection {
   position: relative;
-}
-.buttonSection {
-  position: absolute;
-  top: 83%;
-  left: 6.5%;
 }
 .button {
   width: 343px;
@@ -22,8 +16,7 @@
   cursor: pointer;
   transition: background-color 0.3s ease-in;
   align-content: center;
-  display: inline-block;
-  margin: 0 9.5%;
+  display: block;
 }
 .button:hover {
   background-color: rgb(13, 22, 136);
