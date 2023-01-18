@@ -72,7 +72,7 @@ export default function Discussions({ params }: any) {
               e.preventDefault();
               const token = await localStorage.getItem("token");
               const res = await fetch(
-                "/api/discussion/" + params.get("id") + "/comment",
+                "/api/discussion/" + params.id + "/comment",
                 {
                   method: "POST",
                   headers: {
