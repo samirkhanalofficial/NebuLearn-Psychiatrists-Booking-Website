@@ -85,7 +85,6 @@ export default function Register({ params }: any) {
         <title>Add Appoinment</title>
       </Head>
       <Nav route="psychiatrists" />
-      {params.id}
       <form action="" onSubmit={async (event) => addMeditation(event)}>
         <FormLayout image={appointmentDone ? "/samirQr.jpg" : image}>
           {appointmentDone ? (
