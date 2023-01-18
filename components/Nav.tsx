@@ -8,8 +8,7 @@ import { GiMeditation, GiHamburgerMenu } from "react-icons/gi";
 import { FaBriefcaseMedical, FaRegUserCircle } from "react-icons/fa";
 import { GrUserAdmin } from "react-icons/gr";
 import { RiMentalHealthFill } from "react-icons/ri";
-
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 export default function Nav({ route }: { route: string }) {
   const [navOpen, toggleNav] = useState(false);
   const router = useRouter();

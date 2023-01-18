@@ -6,7 +6,7 @@ import style from "../../styles/Nav.module.css";
 import { AiFillHome, AiOutlineGroup } from "react-icons/ai";
 import { GiMeditation, GiHamburgerMenu } from "react-icons/gi";
 import { FaBriefcaseMedical, FaRegUserCircle } from "react-icons/fa";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 export default function Nav({ route }: { route: string }) {
   const [navOpen, toggleNav] = useState(false);
   const [isLoggined, changeLoginnedStatus] = useState(false);
