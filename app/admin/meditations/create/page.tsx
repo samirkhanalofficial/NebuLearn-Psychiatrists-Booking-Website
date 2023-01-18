@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import FormLayout from "@/components/Formlayout";
 import Nav from "@/components/admins/Nav";
-import head from "next/head";
+
 export type userType = {
   _id: string;
   fullName: string;
@@ -16,7 +16,9 @@ export type userType = {
 export default function Register() {
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
+  const [loading, setloading] = useState(false);
   async function addMeditation(event: any) {
+    setloading(true);
     event.preventDefault();
     const token = await localStorage.getItem("AdminToken");
     var res = await fetch("/api/admin/meditation/create", {
@@ -32,7 +34,9 @@ export default function Register() {
     });
     if (res.status != 200) {
       toast.error("Error adding Meditation");
+      setloading(false);
     } else {
+      setloading(false);
       toast.success("Added Meditation");
     }
   }

@@ -7,6 +7,7 @@ import FormLayout from "@/components/Formlayout";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import head from "next/head";
+import Loading from "@/components/loading";
 
 export default function Login() {
   const router = useRouter();
@@ -15,6 +16,7 @@ export default function Login() {
   const [password, SetPassword] = useState<string>("");
   async function userLogin() {
     try {
+      setloading(true);
       let result = await fetch("/api/admin/login", {
         method: "POST",
         headers: {
@@ -29,16 +31,21 @@ export default function Login() {
           await localStorage.setItem("AdminToken", loginResult.token);
           toast.success("Login Success");
           router.push("/admin/dashboard");
+          setloading(false);
         }
+        setloading(false);
       } else {
         toast.error("Email or Password you entered is incorrect");
+        setloading(false);
       }
     } catch (e: any) {
       toast.error(e.toString());
+      setloading(false);
     }
   }
   //for showing and hiding password
   const [showPassword, setshowPassword] = useState(false);
+  const [loading, setloading] = useState(false);
   const passwordType = showPassword ? "text" : "password";
   function changePasswordVisibility() {
     setshowPassword(!showPassword);
@@ -95,9 +102,15 @@ export default function Login() {
             )}
           </div>
 
-          <button className={style.loginButton} onClick={userLogin}>
-            Login
-          </button>
+          {loading ? (
+            <>
+              <Loading />
+            </>
+          ) : (
+            <button className={style.loginButton} onClick={userLogin}>
+              Login
+            </button>
+          )}
 
           <span className="test">
             Not an Admin ?

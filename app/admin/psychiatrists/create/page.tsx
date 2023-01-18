@@ -6,6 +6,7 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import FormLayout from "@/components/Formlayout";
 import Nav from "@/components/admins/Nav";
 import head from "next/head";
+import Loading from "@/components/loading";
 export type userType = {
   _id: string;
   fullName: string;
@@ -18,6 +19,7 @@ export default function Register() {
   const [selectedFile, setSelectedFile] = useState<File>();
   const [isFilePicked, setIsFilePicked] = useState<boolean>(false);
   const [showPassword, setshowPassword] = useState(false);
+  const [loading, setloading] = useState(false);
   const passwordType = showPassword ? "text" : "password";
   function changePasswordVisibility() {
     setshowPassword(!showPassword);
@@ -25,6 +27,7 @@ export default function Register() {
   async function RegisterNow(event: any) {
     event.preventDefault();
     const token = await localStorage.getItem("AdminToken");
+    setloading(true);
     var user = await fetch("/api/psychiatrists/create", {
       method: "POST",
       body: JSON.stringify({
@@ -43,6 +46,7 @@ export default function Register() {
     if (user.status != 200) {
       const userData: { message: string } = await user.json();
       toast.error(userData?.message!);
+      setloading(false);
     } else {
       const userData: userType = await user.json();
       toast.success("Registered Successfully");
@@ -60,9 +64,11 @@ export default function Register() {
         }
       );
       if (response.status != 200) {
+        setloading(false);
         toast.error("Error uploading Image");
         return;
       } else {
+        setloading(false);
         setUserInfo([userData, ...userInfo]);
         setUserName("");
         setUserEmail("");
@@ -192,7 +198,11 @@ export default function Register() {
                 }}
               />
             </div>
-            <button className={style.loginButton}>Add psychiatrist</button>
+            {loading ? (
+              <Loading />
+            ) : (
+              <button className={style.loginButton}>Add psychiatrist</button>
+            )}
           </>
         </FormLayout>
       </form>

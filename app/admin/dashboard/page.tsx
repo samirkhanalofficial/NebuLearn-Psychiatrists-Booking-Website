@@ -7,6 +7,8 @@ import React, { useEffect, useState } from "react";
 import { FaRegUserCircle } from "react-icons/fa";
 import { toast } from "react-toastify";
 import style from "@/styles/Discussion.module.css";
+import Loading from "@/components/loading";
+import NoResult from "@/components/NoResult";
 
 type appoinmentType = {
   _id: string;
@@ -26,8 +28,11 @@ export default function Profile() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [appoinments, setAppoinments] = useState<appoinmentType[]>([]);
+  const [loading, setloading] = useState(true);
   const router = useRouter();
   async function getMyAppoinments() {
+    setloading(true);
+
     const token = await localStorage.getItem("AdminToken");
     var res = await fetch("/api/admin/meetings/", {
       headers: {
@@ -37,12 +42,16 @@ export default function Profile() {
     });
     if (res.status != 200) {
       toast.error("Error Fetching Data");
+      setloading(false);
     } else {
       const data = await res.json();
       setAppoinments(data);
+      setloading(false);
     }
   }
   async function getUser() {
+    setloading(true);
+
     const token = await localStorage.getItem("AdminToken");
     if (!token) {
       router.push("/admin/");
@@ -54,12 +63,15 @@ export default function Profile() {
       },
     });
     if (res.status != 200) {
+      setloading(false);
+
       toast.error("Error Fetching Data");
     } else {
       const data = await res.json();
       console.log(data);
       setName(data.fullName);
       setEmail(data.email);
+      setloading(false);
     }
     await getMyAppoinments();
   }
@@ -112,65 +124,71 @@ export default function Profile() {
             Appoinments Approvals: <br />
             <br />
           </h2>
-          {appoinments.map((appoinment) => (
-            <>
-              <div
-                key={appoinment._id}
-                style={{ overflowX: "hidden" }}
-                className={style.discussion}
-              >
-                <b>Client: {appoinment.clientName}</b> <br />(
-                {appoinment.client}) <br />
-                <b>Dr. {appoinment.doctorName}</b>
-                <br />({appoinment.doctor})
-                <br />
-                <b>{appoinment.date}</b>
-                <p>{appoinment.time}</p>
-                <br />
-                <br />
-                <p>Price: Rs. {appoinment.price}</p>
-                <p>Reference: {appoinment._id}</p>
-                <br />
-                {!appoinment.paid ? (
-                  <Link
-                    className="mybutton"
-                    href={"#"}
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      gap: "5px",
-                    }}
-                    onClick={async () => {
-                      const token = await localStorage.getItem("AdminToken");
-                      var res = await fetch(
-                        "/api/admin/meetings/" + appoinment._id + "/verify",
-                        {
-                          method: "POST",
-                          headers: {
-                            "Content-Type": "application/json",
-                            authorization: token || "",
-                          },
-                        }
-                      );
-                      if (res.status != 200) {
-                        toast.error("Error Approving Client");
-                      } else {
-                        toast.success("Client Approved");
-                        setAppoinments(
-                          appoinments.filter((a) => a._id != appoinment._id)
+          {loading ? (
+            <Loading />
+          ) : appoinments.length <= 0 ? (
+            <NoResult item="Appoinments" />
+          ) : (
+            appoinments.map((appoinment) => (
+              <>
+                <div
+                  key={appoinment._id}
+                  style={{ overflowX: "hidden" }}
+                  className={style.discussion}
+                >
+                  <b>Client: {appoinment.clientName}</b> <br />(
+                  {appoinment.client}) <br />
+                  <b>Dr. {appoinment.doctorName}</b>
+                  <br />({appoinment.doctor})
+                  <br />
+                  <b>{appoinment.date}</b>
+                  <p>{appoinment.time}</p>
+                  <br />
+                  <br />
+                  <p>Price: Rs. {appoinment.price}</p>
+                  <p>Reference: {appoinment._id}</p>
+                  <br />
+                  {!appoinment.paid ? (
+                    <Link
+                      className="mybutton"
+                      href={"#"}
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: "5px",
+                      }}
+                      onClick={async () => {
+                        const token = await localStorage.getItem("AdminToken");
+                        var res = await fetch(
+                          "/api/admin/meetings/" + appoinment._id + "/verify",
+                          {
+                            method: "POST",
+                            headers: {
+                              "Content-Type": "application/json",
+                              authorization: token || "",
+                            },
+                          }
                         );
-                      }
-                    }}
-                  >
-                    Approve
-                  </Link>
-                ) : (
-                  "Aproved payment"
-                )}
-              </div>
-            </>
-          ))}
+                        if (res.status != 200) {
+                          toast.error("Error Approving Client");
+                        } else {
+                          toast.success("Client Approved");
+                          setAppoinments(
+                            appoinments.filter((a) => a._id != appoinment._id)
+                          );
+                        }
+                      }}
+                    >
+                      Approve
+                    </Link>
+                  ) : (
+                    "Aproved payment"
+                  )}
+                </div>
+              </>
+            ))
+          )}
         </div>
       </div>
     </>

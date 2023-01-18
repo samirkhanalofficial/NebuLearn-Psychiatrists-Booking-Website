@@ -9,6 +9,8 @@ import React, { useEffect, useState } from "react";
 import { FaRegUserCircle, FaVideo } from "react-icons/fa";
 import { toast } from "react-toastify";
 import style from "@/styles/Discussion.module.css";
+import Loading from "@/components/loading";
+import NoResult from "@/components/NoResult";
 
 type appoinmentType = {
   _id: string;
@@ -25,6 +27,7 @@ type appoinmentType = {
   __v: number;
 };
 export default function Profile() {
+  const [loading, setloading] = useState(true);
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [email, setEmail] = useState("");
@@ -32,6 +35,7 @@ export default function Profile() {
   const router = useRouter();
   async function getMyAppoinments() {
     const token = await localStorage.getItem("PsyToken");
+    setloading(true);
     var res = await fetch("/api/admin/meetings/psychiatrist", {
       headers: {
         "Content-Type": "application/json",
@@ -40,9 +44,11 @@ export default function Profile() {
     });
     if (res.status != 200) {
       toast.error("Error Fetching Data");
+      setloading(false);
     } else {
       const data = await res.json();
       setAppoinments(data);
+      setloading(false);
     }
   }
   async function getUser() {
@@ -119,42 +125,48 @@ export default function Profile() {
             Meetings to Join: <br />
             <br />
           </h2>
-          {appoinments.map((appoinment) => (
-            <>
-              <div
-                key={appoinment._id}
-                style={{ overflowX: "hidden" }}
-                className={style.discussion}
-              >
-                <b>Client: {appoinment.clientName}</b> <br />
-                <br />
-                <b>{appoinment.date}</b>
-                <p>{appoinment.time}</p>
-                <br />
-                <br />
-                <p>Price: Rs. {appoinment.price}</p>
-                <p>Reference: {appoinment._id}</p>
-                <br />
-                {!appoinment.paid ? (
-                  <Link
-                    className="mybutton"
-                    href={"/videocall/" + appoinment._id}
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      gap: "5px",
-                    }}
-                    onClick={async () => {}}
-                  >
-                    join <FaVideo />
-                  </Link>
-                ) : (
-                  "UnApproved"
-                )}
-              </div>
-            </>
-          ))}
+          {loading ? (
+            <Loading />
+          ) : appoinments.length <= 0 ? (
+            <NoResult item="Appoinment" />
+          ) : (
+            appoinments.map((appoinment) => (
+              <>
+                <div
+                  key={appoinment._id}
+                  style={{ overflowX: "hidden" }}
+                  className={style.discussion}
+                >
+                  <b>Client: {appoinment.clientName}</b> <br />
+                  <br />
+                  <b>{appoinment.date}</b>
+                  <p>{appoinment.time}</p>
+                  <br />
+                  <br />
+                  <p>Price: Rs. {appoinment.price}</p>
+                  <p>Reference: {appoinment._id}</p>
+                  <br />
+                  {!appoinment.paid ? (
+                    <Link
+                      className="mybutton"
+                      href={"/videocall/" + appoinment._id}
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: "5px",
+                      }}
+                      onClick={async () => {}}
+                    >
+                      join <FaVideo />
+                    </Link>
+                  ) : (
+                    "UnApproved"
+                  )}
+                </div>
+              </>
+            ))
+          )}
         </div>
       </div>
     </>

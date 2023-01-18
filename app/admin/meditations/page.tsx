@@ -7,7 +7,10 @@ import { toast } from "react-toastify";
 import style from "@/styles/Psychiatrist.module.css";
 import { FaTrash } from "react-icons/fa";
 import Card from "@/components/Card";
+import NoResult from "@/components/NoResult";
+import Loading from "@/components/loading";
 export default function Dashboard() {
+  const [loading, setloading] = useState(true);
   const [meditations, setMeditations] = useState<
     {
       title: string;
@@ -17,6 +20,7 @@ export default function Dashboard() {
     }[]
   >([]);
   async function getMeditations() {
+    setloading(true);
     var res = await fetch("/api/admin/meditation", {
       headers: {
         "Content-Type": "application/json",
@@ -25,9 +29,11 @@ export default function Dashboard() {
     if (res.status == 200) {
       const data = await res.json();
       console.log(data);
+      setloading(false);
       setMeditations(data);
     } else {
       toast.error("error getting datas");
+      setloading(false);
     }
   }
   useEffect(() => {
@@ -49,52 +55,58 @@ export default function Dashboard() {
         </Link>
       </div>
       <div className={style.cards}>
-        {meditations.map((meditation) => (
-          <>
-            <div className={style.card} key={meditation._id}>
-              <Card
-                title={meditation.title}
-                src={meditation.link}
-                key={meditation._id}
-              />
-              <br />
+        {loading ? (
+          <Loading />
+        ) : meditations.length <= 0 ? (
+          <NoResult item="Meditation" />
+        ) : (
+          meditations.map((meditation) => (
+            <>
+              <div className={style.card} key={meditation._id}>
+                <Card
+                  title={meditation.title}
+                  src={meditation.link}
+                  key={meditation._id}
+                />
+                <br />
 
-              <Link
-                style={{
-                  display: "block",
-                  backgroundColor: "red",
-                  width: "120px",
-                }}
-                href="#"
-                onClick={async () => {
-                  const token = await localStorage.getItem("AdminToken");
-                  var res = await fetch(
-                    "/api/admin/meditation/delete/" + meditation._id,
-                    {
-                      method: "DELETE",
-                      headers: {
-                        "Content-Type": "application/json",
-                        authorization: token || "",
-                      },
-                    }
-                  );
-                  if (res.status != 200) {
-                    toast.error("error deleting meditation");
-                  } else {
-                    toast.success("deleted meditation");
-                    setMeditations(
-                      meditations.filter((m) => m._id != meditation._id)
+                <Link
+                  style={{
+                    display: "block",
+                    backgroundColor: "red",
+                    width: "120px",
+                  }}
+                  href="#"
+                  onClick={async () => {
+                    const token = await localStorage.getItem("AdminToken");
+                    var res = await fetch(
+                      "/api/admin/meditation/delete/" + meditation._id,
+                      {
+                        method: "DELETE",
+                        headers: {
+                          "Content-Type": "application/json",
+                          authorization: token || "",
+                        },
+                      }
                     );
-                  }
-                }}
-                className={style.addPsychiatrist}
-              >
-                <FaTrash />
-                Delete
-              </Link>
-            </div>
-          </>
-        ))}
+                    if (res.status != 200) {
+                      toast.error("error deleting meditation");
+                    } else {
+                      toast.success("deleted meditation");
+                      setMeditations(
+                        meditations.filter((m) => m._id != meditation._id)
+                      );
+                    }
+                  }}
+                  className={style.addPsychiatrist}
+                >
+                  <FaTrash />
+                  Delete
+                </Link>
+              </div>
+            </>
+          ))
+        )}
       </div>
     </div>
   );
