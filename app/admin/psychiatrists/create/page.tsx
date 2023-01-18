@@ -51,23 +51,43 @@ export default function Register() {
       const userData: userType = await user.json();
       toast.success("Registered Successfully");
       const formData = new FormData();
-      formData.append("image", selectedFile!);
+      formData.append("file", selectedFile!);
+      formData.append("upload_preset", "my-upload");
       console.log("userId:" + userData._id);
       const response = await fetch(
-        "/api/psychiatrists/" + userData._id + "/add-image",
+        "https://api.cloudinary.com/v1_1/dmybkl5mt/image/upload",
         {
           method: "POST",
-          headers: {
-            authorization: token || "",
-          },
           body: formData,
         }
       );
       if (response.status != 200) {
+        toast.error("Error uploading image");
         setloading(false);
-        toast.error("Error uploading Image");
         return;
       } else {
+        const decod = await response.json();
+        var res = await fetch(
+          "/api/psychiatrists/" + userData._id + "/add-image",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              authorization: token || "",
+            },
+            body: JSON.stringify({
+              image: decod.url!,
+            }),
+          }
+        );
+        if (res.status == 200) {
+          toast.error("user Created with image uploading completion");
+          setloading(false);
+        } else {
+          toast.error("Error updating image");
+          setloading(false);
+        }
+
         setloading(false);
         setUserInfo([userData, ...userInfo]);
         setUserName("");
