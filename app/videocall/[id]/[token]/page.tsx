@@ -12,6 +12,7 @@ async function getUserDetails({ params }: any) {
       "Content-Type": "application/json",
       authorization: token || "",
     },
+    cache: "no-store",
   });
   if (res.status != 200) return redirect("/");
   const data = await res.json();
@@ -24,11 +25,12 @@ export default async function Page({
 }) {
   const data = await getUserDetails({ params });
   return (
-    <VideoCallScreen
-      meetingId={data.meetingId}
-      partnerId={data.partnerId}
-      myId={data.myId}
-      meeting={data.meeting}
-    />
+    // <VideoCallScreen
+    //   meetingId={data.meetingId}
+    //   partnerId={data.partnerId}
+    //   myId={data.myId}
+    //   meeting={data.meeting}
+    // />
+    <>Hello</>
   );
 }
