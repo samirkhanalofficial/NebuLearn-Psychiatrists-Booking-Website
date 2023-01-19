@@ -8,7 +8,10 @@ const VideoCallScreen = dynamic(() => import("./VideoCallScreen"), {
 
 export default function Page({ params, searchParams }: any) {
   const [data, setData] = useState<any>();
+  let firstTime = 0;
   async function getUserDetails() {
+    // const search = await searchParams.json();
+    console.log("token:" + searchParams.token);
     const res = await fetch("/api/videocall", {
       method: "POST",
       body: JSON.stringify({
@@ -24,7 +27,10 @@ export default function Page({ params, searchParams }: any) {
     setData(dataa);
   }
   useEffect(() => {
-    getUserDetails();
+    if (firstTime == 0) {
+      getUserDetails();
+      firstTime++;
+    }
   }, []);
   return (
     <>

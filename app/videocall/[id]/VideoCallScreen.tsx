@@ -24,6 +24,9 @@ export default function VideoCallScreen({
       audio: true,
       video: true,
     });
+    peer.on("connection", (conn) => {
+      console.log("connected to : " + conn);
+    });
     peer.on("call", (call) => {
       setIsCalling(true);
       navigator.mediaDevices
