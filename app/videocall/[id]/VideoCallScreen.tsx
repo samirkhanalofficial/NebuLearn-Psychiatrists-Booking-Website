@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import style from "@/styles/videoCall.module.css";
 import { FaPhoneAlt } from "react-icons/fa";
+
 import Peer from "peerjs";
 export default function VideoCallScreen({
   meetingId,
@@ -19,6 +20,10 @@ export default function VideoCallScreen({
     console.log("connected peer as " + conn);
   });
   useEffect(() => {
+    navigator.mediaDevices.getUserMedia({
+      audio: true,
+      video: true,
+    });
     peer.on("call", (call) => {
       setIsCalling(true);
       navigator.mediaDevices
@@ -58,8 +63,9 @@ export default function VideoCallScreen({
         myVideo.srcObject = stream;
         myVideo.play();
         myVideo.muted = true;
+        console.log("connecting to  " + meetingId + partnerId);
+
         var call = peer.call(meetingId + partnerId, stream);
-        console.log(call);
         call.on("stream", (remoteStream) => {
           const remoteVideo = document.getElementById(
             "remoteVideo"
