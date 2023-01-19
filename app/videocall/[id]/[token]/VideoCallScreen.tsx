@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "@/styles/videoCall.module.css";
 import { FaPhoneAlt } from "react-icons/fa";
 import Peer from "peerjs";
@@ -18,28 +18,32 @@ export default function VideoCallScreen({
   peer.on("open", (conn) => {
     console.log("connected peer as " + conn);
   });
-  peer.on("call", (call) => {
-    setIsCalling(true);
-    navigator.mediaDevices
-      .getUserMedia({
-        audio: true,
-        video: true,
-      })
-      .then((stream) => {
-        const myVideo = document.getElementById("myVideo") as HTMLVideoElement;
-        myVideo.srcObject = stream;
-        myVideo.play();
-        myVideo.muted = true;
-        call.answer(stream);
-        call.on("stream", (remoteStream) => {
-          const remoteVideo = document.getElementById(
-            "remoteVideo"
+  useEffect(() => {
+    peer.on("call", (call) => {
+      setIsCalling(true);
+      navigator.mediaDevices
+        .getUserMedia({
+          audio: true,
+          video: true,
+        })
+        .then((stream) => {
+          const myVideo = document.getElementById(
+            "myVideo"
           ) as HTMLVideoElement;
-          remoteVideo.srcObject = remoteStream;
-          remoteVideo.play();
-          console.log("playing remote by call");
+          myVideo.srcObject = stream;
+          myVideo.play();
+          myVideo.muted = true;
+          call.answer(stream);
+          call.on("stream", (remoteStream) => {
+            const remoteVideo = document.getElementById(
+              "remoteVideo"
+            ) as HTMLVideoElement;
+            remoteVideo.srcObject = remoteStream;
+            remoteVideo.play();
+            console.log("playing remote by call");
+          });
         });
-      });
+    });
   });
   const [isCalling, setIsCalling] = useState(false);
   function myCall() {
