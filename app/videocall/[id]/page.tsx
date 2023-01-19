@@ -22,7 +22,7 @@ async function getUserDetails(params: any) {
   //   return data;
 }
 export default async function Page({ params, searchParams }: any) {
-  console.log("search params: " + searchParams.token);
+  console.log("search params: " + searchParams.searchParams);
   const data = await getUserDetails({
     id: params.id,
     token: searchParams.token,
