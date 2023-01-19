@@ -19,7 +19,11 @@ export async function getUserDetails({ params }: any) {
   const data = await res.json();
   return data;
 }
-export default async function Page(params: { id: string; token: string }) {
+export default async function Page({
+  params,
+}: {
+  params: { id: string; token: string };
+}) {
   const data = await getUserDetails({ params });
   return (
     <VideoCallScreen
