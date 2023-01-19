@@ -154,9 +154,7 @@ export default function Profile() {
                   {appoinment.paid ? (
                     <Link
                       className="mybutton"
-                      href={
-                        "/videocall/" + appoinment._id + "?token=" + mytoken
-                      }
+                      href={"/videocall/" + appoinment._id}
                       style={{
                         display: "flex",
                         justifyContent: "center",

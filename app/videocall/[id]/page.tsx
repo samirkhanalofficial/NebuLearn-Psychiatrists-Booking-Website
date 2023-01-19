@@ -6,12 +6,12 @@ const VideoCallScreen = dynamic(() => import("./VideoCallScreen"), {
   ssr: false,
 });
 
-export default function Page({ params, searchParams }: any) {
+export default function Page({ params }: any) {
   const [data, setData] = useState<any>();
   let firstTime = 0;
   async function getUserDetails() {
-    const search = await searchParams.json();
-    console.log("token:" + search);
+    const token = await localStorage.getItem("token");
+    const Psytoken = await localStorage.getItem("PsyToken");
     const res = await fetch("/api/videocall", {
       method: "POST",
       body: JSON.stringify({
@@ -19,11 +19,10 @@ export default function Page({ params, searchParams }: any) {
       }),
       headers: {
         "Content-Type": "application/json",
-        authorization: searchParams.token || "",
+        authorization: token! || Psytoken!,
       },
     });
     const dataa = await res.json();
-    console.log(dataa);
     setData(dataa);
   }
   useEffect(() => {
