@@ -3,7 +3,7 @@ import React from "react";
 import VideoCallScreen from "./VideoCallScreen";
 async function getUserDetails({ params }: any) {
   const { id, token } = params;
-  const res = await fetch("http://localhost:3000/api/videocall", {
+  const res = await fetch("https://codestorm.samirk.com.np/api/videocall", {
     method: "POST",
     body: JSON.stringify({
       id: id,
@@ -24,5 +24,12 @@ export default async function Page({
   params: { id: string; token: string };
 }) {
   const data = await getUserDetails({ params });
-  return <>hello</>;
+  return (
+    <VideoCallScreen
+      meetingId={data.meetingId}
+      partnerId={data.partnerId}
+      myId={data.myId}
+      meeting={data.meeting}
+    />
+  );
 }
