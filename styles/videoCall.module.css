@@ -49,3 +49,6 @@
 .makeCall:active {
   background-color: rgb(13, 22, 136) !important;
 }
+.hidden {
+  display: none;
+}

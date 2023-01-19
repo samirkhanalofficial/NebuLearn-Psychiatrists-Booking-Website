@@ -93,13 +93,15 @@ export default function VideoCallScreen({
         {meeting.clientName} <br />
         <b>Client Age:</b>
         {meeting.clientAge} <br />
-        <br />
+        <br />(
+        <div className={isCalling ? "" : style.hidden}>
+          <span className={style.title}>my Video</span>
+          <br />
+          <video id="myVideo"></video>
+        </div>
+        )
         {isCalling ? (
-          <>
-            <span className={style.title}>my Video</span>
-            <br />
-            <video id="myVideo"></video>
-          </>
+          <></>
         ) : (
           <>
             <button className={style.makeCall} onClick={() => myCall()}>
