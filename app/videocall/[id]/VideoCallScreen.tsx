@@ -58,14 +58,14 @@ export default function VideoCallScreen({
         audio: true,
         video: true,
       })
-      .then((stream) => {
+      .then(async (stream) => {
         const myVideo = document.getElementById("myVideo") as HTMLVideoElement;
         myVideo.srcObject = stream;
         myVideo.play();
         myVideo.muted = true;
         console.log("connecting to  " + meetingId + partnerId);
 
-        var call = peer.call(meetingId + partnerId, stream);
+        var call = await peer.call(meetingId + partnerId, stream);
         call.on("stream", (remoteStream) => {
           const remoteVideo = document.getElementById(
             "remoteVideo"
