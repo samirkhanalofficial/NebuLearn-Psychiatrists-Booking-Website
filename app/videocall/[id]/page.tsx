@@ -6,6 +6,7 @@ const VideoCallScreen = dynamic(() => import("./VideoCallScreen"), {
 });
 async function getUserDetails(params: any) {
   const { id, token } = params;
+  console.log(params);
   const res = await fetch("https://codestorm.samirk.com.np/api/videocall", {
     method: "POST",
     body: JSON.stringify({
