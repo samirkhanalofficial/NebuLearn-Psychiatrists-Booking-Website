@@ -94,7 +94,7 @@ export default function Profile() {
           }}
           className={style.discussionForm}
         >
-          <form action="">
+          <form action="" onSubmit={(e) => e.preventDefault()}>
             <FaRegUserCircle
               style={{
                 fontSize: "205px",

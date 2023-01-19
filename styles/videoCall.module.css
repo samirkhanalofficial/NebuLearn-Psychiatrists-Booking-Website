@@ -1,0 +1,51 @@
+.contents {
+  display: flex;
+  justify-content: space-between;
+}
+.videoCallScreen {
+  width: 70vw;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.detailScreen {
+  width: 25vw;
+  background-color: white;
+}
+.detailScreen .title {
+  padding: 10px;
+  background: #03c4ff;
+  color: white;
+  display: block;
+  width: 95%;
+  font-weight: bold;
+}
+.detailScreen video {
+  width: 95%;
+  height: auto;
+  background-color: black;
+  border-radius: 8px;
+}
+.videoCallScreen video {
+  width: 95%;
+  height: auto;
+  background-color: black;
+  border-radius: 8px;
+}
+.makeCall {
+  background-color: #03c4ff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.makeCall:hover,
+.makeCall:active {
+  background-color: rgb(13, 22, 136) !important;
+}

@@ -97,7 +97,7 @@ export default function Register({ params }: any) {
         <FormLayout image={appointmentDone ? "/samirQr.jpg" : image}>
           {loading ? (
             <Loading />
-          ) : !name ? (
+          ) : !name && !appointmentDone ? (
             <NoResult item="Data of psychiatrist" />
           ) : appointmentDone ? (
             <>

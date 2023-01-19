@@ -33,8 +33,10 @@ export default function Profile() {
   const [email, setEmail] = useState("");
   const [appoinments, setAppoinments] = useState<appoinmentType[]>([]);
   const router = useRouter();
+  const [mytoken, setToken] = useState("");
   async function getMyAppoinments() {
     const token = await localStorage.getItem("PsyToken");
+    setToken(token!);
     setloading(true);
     var res = await fetch("/api/admin/meetings/psychiatrist", {
       headers: {
@@ -146,10 +148,10 @@ export default function Profile() {
                   <p>Price: Rs. {appoinment.price}</p>
                   <p>Reference: {appoinment._id}</p>
                   <br />
-                  {!appoinment.paid ? (
+                  {appoinment.paid ? (
                     <Link
                       className="mybutton"
-                      href={"/videocall/" + appoinment._id}
+                      href={"/videocall/" + appoinment._id + "/" + mytoken}
                       style={{
                         display: "flex",
                         justifyContent: "center",

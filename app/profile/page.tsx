@@ -30,11 +30,13 @@ export default function Profile() {
   const [age, setAge] = useState("");
   const [appoinments, setAppoinments] = useState<appoinmentType[]>([]);
   const router = useRouter();
+  const [mytoken, setToken] = useState("");
   const params = useSearchParams();
 
   async function getMyAppoinments() {
     setloading(true);
     const token = await localStorage.getItem("token");
+    setToken(token?.toString()!);
     var res = await fetch("/api/admin/meetings/user", {
       headers: {
         "Content-Type": "application/json",
@@ -152,7 +154,7 @@ export default function Profile() {
                   {appoinment.paid ? (
                     <Link
                       className="mybutton"
-                      href={"/videocall/" + appoinment._id}
+                      href={"/videocall/" + appoinment._id + "/" + mytoken}
                       style={{
                         display: "flex",
                         justifyContent: "center",
