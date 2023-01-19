@@ -52,3 +52,60 @@
 .hidden {
   display: none;
 }
+
+@media only screen and (width<=600px) {
+  .contents {
+    display: block;
+  }
+  .videoCallScreen {
+    width: 100%;
+    height: 100%;
+  }
+  .detailScreen {
+    width: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+  }
+  .detailScreen .title {
+    padding: 10px;
+    background: #03c4ff;
+    color: white;
+    display: block;
+    width: 95%;
+    font-weight: bold;
+  }
+  .detailScreen video {
+    width: 200px;
+    right: 0px;
+    background-color: black;
+    border-radius: 8px;
+    bottom: 0px;
+  }
+  .videoCallScreen video {
+    width: 95%;
+    height: auto;
+    background-color: black;
+    border-radius: 8px;
+  }
+  .makeCall {
+    background-color: #03c4ff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .makeCall:hover,
+  .makeCall:active {
+    background-color: rgb(13, 22, 136) !important;
+  }
+  .hidden {
+    display: none;
+  }
+}

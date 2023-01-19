@@ -85,31 +85,34 @@ export default function VideoCallScreen({
         <video id="remoteVideo"></video>
       </div>
       <div className={style.detailScreen}>
-        <span className={style.title}>About This Call</span>
-        <br />
-        <b>Dr Name:</b> <br />
-        {meeting.doctorName} <br />
-        <b>Client Name:</b> <br />
-        {meeting.clientName} <br />
-        <b>Client Age:</b>
-        {meeting.clientAge} <br />
-        <br />(
-        <div className={isCalling ? "" : style.hidden}>
-          <span className={style.title}>my Video</span>
+        <div>
+          <span className={style.title}>About This Call</span>
           <br />
-          <video id="myVideo"></video>
+          <b>Dr Name:</b> <br />
+          {meeting.doctorName} <br />
+          <b>Client Name:</b> <br />
+          {meeting.clientName} <br />
+          <b>Client Age:</b>
+          {meeting.clientAge} <br />
+          <br />
         </div>
-        )
-        {isCalling ? (
-          <></>
-        ) : (
-          <>
-            <button className={style.makeCall} onClick={() => myCall()}>
-              <FaPhoneAlt />
-              Make this Call{" "}
-            </button>
-          </>
-        )}
+        <div>
+          <div className={isCalling ? "" : style.hidden}>
+            <span className={style.title}>my Video</span>
+            <br />
+            <video id="myVideo"></video>
+          </div>
+          {isCalling ? (
+            <></>
+          ) : (
+            <>
+              <button className={style.makeCall} onClick={() => myCall()}>
+                <FaPhoneAlt />
+                Make this Call{" "}
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
