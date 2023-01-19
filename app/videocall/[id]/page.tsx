@@ -27,7 +27,7 @@ export default async function Page({ params, searchParams }: any) {
     id: params.id,
     token: searchParams.token,
   });
-  console.log("search params: " + searchParams);
+  console.log("search params: " + searchParams.json());
   return (
     <VideoCallScreen
       meetingId={data.meetingId}
