@@ -12,7 +12,6 @@ async function getUserDetails({ params }: any) {
       "Content-Type": "application/json",
       authorization: token || "",
     },
-    cache: "no-store",
   });
   if (res.status != 200) return redirect("/");
   const data = await res.json();
