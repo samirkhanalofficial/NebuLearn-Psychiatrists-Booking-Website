@@ -10,8 +10,8 @@ export default function Page({ params, searchParams }: any) {
   const [data, setData] = useState<any>();
   let firstTime = 0;
   async function getUserDetails() {
-    // const search = await searchParams.json();
-    console.log("token:" + searchParams.token);
+    const search = await searchParams.json();
+    console.log("token:" + search);
     const res = await fetch("/api/videocall", {
       method: "POST",
       body: JSON.stringify({
