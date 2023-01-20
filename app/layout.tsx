@@ -1,6 +1,9 @@
 "use client";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Montserrat } from "@next/font/google";
+
+const montserrat = Montserrat({ subsets: ["latin"] });
 export default function RootLayout({
   children,
 }: {
@@ -9,7 +12,7 @@ export default function RootLayout({
   return (
     <html>
       <head />
-      <body>
+      <body className={montserrat.className}>
         <ToastContainer position="bottom-left" />
         {children}
       </body>
