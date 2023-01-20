@@ -20,6 +20,9 @@ export default function VideoCallScreen({
     console.log("connected peer as " + conn);
   });
   useEffect(() => {
+    console.log(
+      "meeting: " + meetingId + " partner : " + partnerId + " me : " + myId
+    );
     navigator.mediaDevices.getUserMedia({
       audio: true,
       video: true,
