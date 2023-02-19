@@ -36,24 +36,24 @@
   "dir": "auto",
   "screenshots": [
     {
-      "src": "/ss2.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "src": "/ss3.jpg",
+      "type": "image/jpg",
+      "sizes": "1080x2400"
     },
     {
-      "src": "/ss3.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "src": "/ss4.jpg",
+      "type": "image/jpg",
+      "sizes": "1080x2400"
     },
     {
       "src": "/ss1.png",
       "type": "image/png",
-      "sizes": "1024x1024"
+      "sizes": "1366x768"
     },
     {
       "src": "/ss2.png",
       "type": "image/png",
-      "sizes": "1024x1024"
+      "sizes": "1366x768"
     }
   ]
 }
