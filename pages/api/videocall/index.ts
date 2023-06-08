@@ -30,7 +30,7 @@ export default async function handler(
         message: "No Meeting Found",
       });
     const myId = await payload.id;
-    const partnerId = meeting.client == myId ? meeting.doctor : meeting.client;
+    const partnerId = meeting.client == myId ? meeting.client : meeting.doctor;
     return res.json({
       partnerId,
       myId,
