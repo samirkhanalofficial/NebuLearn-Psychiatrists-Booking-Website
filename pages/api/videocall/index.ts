@@ -36,6 +36,7 @@ export default async function handler(
       myId,
       meetingId: value.id,
       meeting,
+      role:meeting.client == myId ? "client" : "doctor"
     });
   } else
     return res.status(400).json({
