@@ -17,7 +17,7 @@ export default function RootLayout({
     }
   }, []);
   return (
-    <html>
+    <html suppressHydrationWarning={true}>
       <head />
       <Script src="registersw.js"></Script>
       <body className={montserrat.className}>

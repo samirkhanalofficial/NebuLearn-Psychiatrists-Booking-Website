@@ -78,6 +78,7 @@ class UserController {
         confirmPassword: Joi.string().valid(Joi.ref("password")).required(),
         age: Joi.number().min(15).max(99).required(),
         amount: Joi.string().required(),
+        nmcNumber: Joi.string().required(),
       }).validate(req.body);
       if (error) return res.status(400).json({ message: error.message });
 
@@ -92,6 +93,7 @@ class UserController {
             password: hash,
             age: value.age,
             price: value.amount,
+            nmcNumber: value.nmcNumber,
           };
           console.log(value.email);
 

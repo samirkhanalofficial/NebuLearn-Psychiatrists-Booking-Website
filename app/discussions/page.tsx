@@ -21,11 +21,11 @@ export default function Discussions() {
       _id: string;
     }[]
   >([]);
-  const [isLoggined, changeLoginnedStatus] = useState(false);
   const router = useRouter();
 
   async function getData() {
     const token = await localStorage.getItem("token");
+    if (!token) return router.push("/login");
     const res = await fetch("/api/discussion/", {
       method: "GET",
       headers: {
@@ -44,16 +44,9 @@ export default function Discussions() {
     }
   }
   useEffect(() => {
-    checklogin();
     getData();
   }, []);
-  async function checklogin() {
-    const token = await localStorage.getItem("token");
-    console.log(token);
-    if (!token) {
-      router.push("/login");
-    }
-  }
+
   return (
     <>
       <head>

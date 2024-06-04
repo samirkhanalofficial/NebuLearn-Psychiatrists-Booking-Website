@@ -10,6 +10,7 @@ import head from "next/head";
 import { useRouter, useSearchParams } from "next/navigation";
 import Loading from "@/components/loading";
 import NoResult from "@/components/NoResult";
+import Image from "next/image";
 export type userType = {
   _id: string;
   fullName: string;
@@ -18,7 +19,8 @@ export type userType = {
   confirmPassword: string;
   date: string;
 };
-export default function Register({ params }: any) {
+export default function Register({ params, searchParams }: any) {
+  const success = searchParams.success ?? "";
   const [loading, setloading] = useState(true);
   const imageReg =
     "https://images.pexels.com/photos/1274260/pexels-photo-1274260.jpeg?auto=compress&cs=tinysrgb&w=600";
@@ -50,41 +52,38 @@ export default function Register({ params }: any) {
       setloading(false);
     }
   }
-  async function addMeditation(event: any) {
+  async function addMeeting(event: any) {
     event.preventDefault();
-    setloading(true);
-    const token = await localStorage.getItem("token");
-    var res = await fetch("/api/admin/meetings/create", {
-      method: "POST",
-      body: JSON.stringify({
-        date,
-        time,
-        doctor: params.id,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-        authorization: token || "",
-      },
-    });
-    if (res.status != 200) {
-      toast.error("Error Booking for Appoinments");
+    try {
+      setloading(true);
+      const token = await localStorage.getItem("token");
+      var res = await fetch("/api/admin/meetings/create", {
+        method: "POST",
+        body: JSON.stringify({
+          date,
+          time,
+          doctor: params.id,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token || "",
+        },
+      });
+      if (res.status != 200) {
+        toast.error("Error Booking for Appoinments");
+        setloading(false);
+      } else {
+        const data = await res.json();
+        window.location = data.payment_url;
+      }
+    } catch (e: any) {
+      toast.error(e);
+    } finally {
       setloading(false);
-    } else {
-      const data = await res.json();
-      setappoinmentDone(true);
-      console.log(data);
-      setAppId(data._id);
-      setName(data.fullName);
-      setImage("/samirQr.jpg");
-      setloading(false);
-      toast.success(
-        "Appoinment booked. Please pay the shown amount using esewa with remark shown here."
-      );
     }
   }
 
   useEffect(() => {
-    console.log(params);
     getUser();
   }, []);
   return (
@@ -93,22 +92,36 @@ export default function Register({ params }: any) {
         <title>Add Appoinment</title>
       </head>
       <Nav route="psychiatrists" />
-      <form action="" onSubmit={async (event) => addMeditation(event)}>
-        <FormLayout image={appointmentDone ? "/samirQr.jpg" : image}>
+      <form action="" onSubmit={async (event) => addMeeting(event)}>
+        <FormLayout
+          image={
+            success == "true"
+              ? "/success.webp"
+              : success == "false"
+              ? "/fail.png"
+              : image
+          }
+        >
           {loading ? (
             <Loading />
           ) : !name && !appointmentDone ? (
             <NoResult item="Data of psychiatrist" />
-          ) : appointmentDone ? (
+          ) : success != "" ? (
             <>
               <div className={style.h1}>
-                <h1>Rs. {price}</h1>
+                <h1
+                  style={{
+                    color: success == "true" ? "" : "red",
+                  }}
+                >
+                  Payment {success == "true" ? "Success" : "Failed"}
+                </h1>
               </div>
-              <div className={style.h1}>
-                <b>Reference: {appID}</b>
+              <div>
+                <b>Reference ID : {searchParams.meetingid ?? ""}</b>
               </div>
-              Please pay by scanning manually. Our admin will approve your
-              appoinments after payments.
+              Please take a screenshot of this id, this will help you to claim
+              your money back in case of payment errors.
               <br />
               <br /> <br /> <br />
               <Link href="/profile" className="mybutton">
@@ -140,8 +153,26 @@ export default function Register({ params }: any) {
                   value={time}
                 />
               </div>
-              <b>Price: Rs. {price}</b>
-              <button className={style.loginButton}>Book Appoinment</button>
+              <hr />
+              <br />
+              <div className={style.LoginContent}>Psychiatrist Name</div>
+              <div>
+                <input
+                  className={style.inputField}
+                  disabled={true}
+                  value={name}
+                />
+              </div>
+              <div className={style.LoginContent}>Price (Rs)</div>
+              <div>
+                <input
+                  className={style.inputField}
+                  disabled={true}
+                  value={price}
+                />
+              </div>
+
+              <button className={style.loginButton}>Pay With Khalti </button>
             </>
           )}
         </FormLayout>

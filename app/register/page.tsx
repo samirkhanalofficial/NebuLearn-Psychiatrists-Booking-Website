@@ -25,33 +25,38 @@ export default function Register() {
   }
   async function RegisterNow(event: any) {
     event.preventDefault();
-    setloading(true);
-    var user = await fetch("/api/user", {
-      method: "POST",
-      body: JSON.stringify({
-        fullName: userName,
-        email: userEmail,
-        password: userPassword,
-        age: age,
-        confirmPassword: userConfirmPassword,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (user.status != 200) {
-      const userData: { message: string } = await user.json();
-      toast.error(userData.message!);
-      setloading(false);
-    } else {
-      const userData: userType = await user.json();
-      toast.success("Registered Successfully");
-      setUserInfo([userData, ...userInfo]);
-      setUserName("");
-      setUserEmail("");
-      setUserPassword("");
-      setAge("");
-      setUserConfirmPassword("");
+    try {
+      setloading(true);
+      var user = await fetch("/api/user", {
+        method: "POST",
+        body: JSON.stringify({
+          fullName: userName,
+          email: userEmail,
+          password: userPassword,
+          age: age,
+          confirmPassword: userConfirmPassword,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (user.status != 200) {
+        const userData: { message: string } = await user.json();
+        toast.error(userData.message!);
+        setloading(false);
+      } else {
+        const userData: userType = await user.json();
+        toast.success("Registered Successfully");
+        setUserInfo([userData, ...userInfo]);
+        setUserName("");
+        setUserEmail("");
+        setUserPassword("");
+        setAge("");
+        setUserConfirmPassword("");
+      }
+    } catch (e: any) {
+      toast.error(e);
+    } finally {
       setloading(false);
     }
   }

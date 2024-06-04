@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import FormLayout from "@/components/Formlayout";
 import Nav from "@/components/admins/Nav";
+import { useRouter } from "next/navigation";
 
 export type userType = {
   _id: string;
@@ -16,28 +17,36 @@ export type userType = {
 export default function Register() {
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
+  const router = useRouter();
   const [loading, setloading] = useState(false);
   async function addMeditation(event: any) {
-    setloading(true);
-    event.preventDefault();
-    const token = await localStorage.getItem("AdminToken");
-    var res = await fetch("/api/admin/meditation/create", {
-      method: "POST",
-      body: JSON.stringify({
-        title,
-        link,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-        authorization: token || "",
-      },
-    });
-    if (res.status != 200) {
-      toast.error("Error adding Meditation");
+    try {
+      setloading(true);
+      event.preventDefault();
+      const token = await localStorage.getItem("AdminToken");
+      var res = await fetch("/api/admin/meditation/create", {
+        method: "POST",
+        body: JSON.stringify({
+          title,
+          link,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token || "",
+        },
+      });
+      if (res.status != 200) {
+        toast.error("Error adding Meditation");
+        setloading(false);
+      } else {
+        setloading(false);
+        toast.success("Added Meditation");
+        router.push("/admin/meditations");
+      }
+    } catch (e: any) {
+      toast.error(e);
+    } finally {
       setloading(false);
-    } else {
-      setloading(false);
-      toast.success("Added Meditation");
     }
   }
 

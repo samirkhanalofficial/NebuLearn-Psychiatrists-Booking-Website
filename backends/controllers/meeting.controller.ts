@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { authService, AuthService } from "../services/auth.service";
 import { meetingService, MeetingService } from "../services/meeting.service";
 import { userService, UserService } from "../services/user.service";
+import { userType } from "../types/user.type";
 const addMeetingValidation = Joi.object({
   doctor: Joi.string().required(),
   date: Joi.string().required(),
@@ -23,7 +24,7 @@ class MeetingController {
     if (!payload) {
       return res.status(400).json({ message: "Login error" });
     }
-    const user = await this.userService.getUserByEmail(payload.email);
+    const user: userType = await this.userService.getUserByEmail(payload.email);
     const doctor = await this.userService.getUserById(value.doctor);
     // Sun Jan 15 2023 06:49:23 GMT+0545 (Nepal Time)'
     const meeting = await this.meetingService.addMeeting({
@@ -38,28 +39,56 @@ class MeetingController {
     });
     if (!meeting)
       return res.status(400).json({ message: "Error adding meeting" });
-    res.status(200).json(meeting);
+    var payment_url = "";
+    await fetch(`${process.env.KHALTI_URL}/epayment/initiate/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `key ${process.env.KHALTI_SECRET_KEY}`,
+      },
+      body: JSON.stringify({
+        return_url: `${process.env.WEBSITE_URL}/api/admin/meetings/${meeting._id}/verify`,
+        website_url: `${process.env.WEBSITE_URL}`,
+        amount: parseFloat(meeting.price.toString()) * 100,
+        purchase_order_id: meeting._id,
+        purchase_order_name: `Meeting with ${meeting.doctorName}`,
+        customer_info: {
+          name: user.fullName,
+          email: user.email,
+        },
+      }),
+    })
+      .then(async (data) => {
+        const resbody = await data.json();
+        if (data.status == 200) return resbody;
+        throw resbody.detail;
+      })
+      .then((data) => {
+        payment_url = data.payment_url;
+      })
+      .catch((err) => {
+        return res.status(400).json({ message: err });
+      });
+    res.status(200).json({ ...meeting, payment_url });
   };
 
   verifyMeeting = async (req: NextApiRequest, res: NextApiResponse) => {
-    const payload = await this.authService.verifyToken(
-      req.headers.authorization!
+    const status = req.query.status ?? "";
+    const purchase_order_id = req.query.purchase_order_id ?? "";
+    const meeting = await this.meetingService.getMeetingById(
+      purchase_order_id.toString()
     );
-    if (!payload) {
-      return res.status(400).json({ message: "Login error" });
+    if (!meeting) return res.redirect("/psychiatrists/");
+    if (status.toString().toLowerCase() == "completed") {
+      await this.meetingService.verifyMeeting(purchase_order_id.toString());
+      return res.redirect(
+        `/psychiatrists/${meeting.doctor}/?success=true&meetingid=${purchase_order_id}`
+      );
+    } else {
+      return res.redirect(
+        `/psychiatrists/${meeting.doctor}/?success=false&meetingid=${purchase_order_id}`
+      );
     }
-    if (!req.query.meetingId) {
-      return res.status(400).json({ message: "meetingId Required" });
-    }
-    if (payload.role != "admin") {
-      return res.status(400).json({ message: "Permission Denied" });
-    }
-    const meeting = await this.meetingService.verifyMeeting(
-      req.query?.meetingId.toString()!
-    );
-    if (!meeting)
-      return res.status(400).json({ message: "Error verifying meeting" });
-    res.status(200).json(meeting);
   };
   getAllMeeting = async (req: NextApiRequest, res: NextApiResponse) => {
     const payload = await this.authService.verifyToken(

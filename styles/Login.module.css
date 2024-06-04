@@ -40,7 +40,7 @@
   transition: background-color 0.3s ease-in;
   align-content: center;
   display: block;
-  margin: 10% 0%;
+  margin: 0 0 10px 0;
 }
 .loginButton:hover {
   background-color: rgb(13, 22, 136);
@@ -58,19 +58,23 @@
   margin-bottom: 4%;
   outline: none;
 }
+.inputField:disabled {
+  border-bottom: none;
+  border-radius: 7px;
+}
 .passwordBox {
   position: relative;
 }
 .hidePassowrd {
   position: absolute;
-  right: 16%;
+  right: 10%;
   top: 16%;
   font-size: 1.5rem;
   cursor: pointer;
 }
 
 .h1 {
-  margin-bottom: 13%;
+  /* margin-bottom: 13%; */
   font-size: 2em;
   display: inline-block;
   color: #03c4ff;
@@ -91,7 +95,7 @@
 }
 
 .p {
-  margin-bottom: 13%;
+  /* margin-bottom: 13%; */
   font-size: 1em;
   color: rgb(117, 117, 112);
 }

@@ -7,7 +7,6 @@ import FormLayout from "@/components/Formlayout";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Nav from "@/components/Nav";
-import head from "next/head";
 import Loading from "@/components/loading";
 
 export default function Login() {
@@ -34,16 +33,15 @@ export default function Login() {
           console.log(loginResult.token);
           await localStorage.setItem("token", loginResult.token);
           toast.success("Login Success");
-          setloading(false);
-          router.push("/");
+          return router.push("/");
         }
-        setloading(false);
       } else {
         toast.error("Email or Password you entered is incorrect");
         setloading(false);
       }
     } catch (e: any) {
       toast.error(e.toString());
+    } finally {
       setloading(false);
     }
   }

@@ -7,6 +7,7 @@ import FormLayout from "@/components/Formlayout";
 import Nav from "@/components/admins/Nav";
 import head from "next/head";
 import Loading from "@/components/loading";
+import { useRouter } from "next/navigation";
 export type userType = {
   _id: string;
   fullName: string;
@@ -21,87 +22,95 @@ export default function Register() {
   const [showPassword, setshowPassword] = useState(false);
   const [loading, setloading] = useState(false);
   const passwordType = showPassword ? "text" : "password";
+  const router = useRouter();
   function changePasswordVisibility() {
     setshowPassword(!showPassword);
   }
   async function RegisterNow(event: any) {
     event.preventDefault();
-    const token = await localStorage.getItem("AdminToken");
-    setloading(true);
-    var user = await fetch("/api/psychiatrists/create", {
-      method: "POST",
-      body: JSON.stringify({
-        fullName: userName,
-        email: userEmail,
-        password: userPassword,
-        age: age,
-        amount: price,
-        confirmPassword: userConfirmPassword,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-        authorization: token || "",
-      },
-    });
-    if (user.status != 200) {
-      const userData: { message: string } = await user.json();
-      toast.error(userData?.message!);
-      setloading(false);
-    } else {
-      const userData: userType = await user.json();
-      toast.success("Registered Successfully");
-      const formData = new FormData();
-      formData.append("file", selectedFile!);
-      formData.append("upload_preset", "my-upload");
-      console.log("userId:" + userData._id);
-      const response = await fetch(
-        "https://api.cloudinary.com/v1_1/dmybkl5mt/image/upload",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-      if (response.status != 200) {
-        toast.error("Error uploading image");
+    try {
+      const token = await localStorage.getItem("AdminToken");
+      setloading(true);
+      var user = await fetch("/api/psychiatrists/create", {
+        method: "POST",
+        body: JSON.stringify({
+          fullName: userName,
+          email: userEmail,
+          password: userPassword,
+          age: age,
+          nmcNumber,
+          amount: price,
+          confirmPassword: userConfirmPassword,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token || "",
+        },
+      });
+      if (user.status != 200) {
+        const userData: { message: string } = await user.json();
+        toast.error(userData?.message!);
         setloading(false);
-        return;
       } else {
-        const decod = await response.json();
-        var res = await fetch(
-          "/api/psychiatrists/" + userData._id + "/add-image",
+        const userData: userType = await user.json();
+        toast.success("Registered Successfully");
+        const formData = new FormData();
+        formData.append("file", selectedFile!);
+        formData.append("upload_preset", "my-upload");
+        console.log("userId:" + userData._id);
+        const response = await fetch(
+          "https://api.cloudinary.com/v1_1/dmybkl5mt/image/upload",
           {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              authorization: token || "",
-            },
-            body: JSON.stringify({
-              image: decod.url!,
-            }),
+            body: formData,
           }
         );
-        if (res.status == 200) {
-          toast.error("user Created with image uploading completion");
+        if (response.status != 200) {
+          toast.error("Error uploading image");
           setloading(false);
+          return;
         } else {
-          toast.error("Error updating image");
+          const decod = await response.json();
+          var res = await fetch(
+            "/api/psychiatrists/" + userData._id + "/add-image",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                authorization: token || "",
+              },
+              body: JSON.stringify({
+                image: decod.url!,
+              }),
+            }
+          );
+          if (res.status == 200) {
+            toast.error("user Created with image uploading completion");
+            router.push("/admin/psychiatrists");
+          } else {
+            toast.error("Error updating image");
+            setloading(false);
+          }
+
+          setUserInfo([userData, ...userInfo]);
+          setUserName("");
+          setUserEmail("");
+          setUserPassword("");
+          setAge("");
+          setUserConfirmPassword("");
+          toast.success("psychiatrist Created");
           setloading(false);
         }
-
-        setUserInfo([userData, ...userInfo]);
-        setUserName("");
-        setUserEmail("");
-        setUserPassword("");
-        setAge("");
-        setUserConfirmPassword("");
-        toast.success("psychiatrist Created");
-        setloading(false);
       }
+    } catch (e: any) {
+      toast.error(e);
+    } finally {
       setloading(false);
     }
   }
   const [userInfo, setUserInfo] = useState<userType[]>([]);
   const [userName, setUserName] = useState<string>("");
+  const [nmcNumber, setNmcNumber] = useState<string>("");
   const [price, setPrice] = useState<string>("");
   const [age, setAge] = useState<string>("");
   const [userEmail, setUserEmail] = useState<string>("");
@@ -134,7 +143,7 @@ export default function Register() {
                 value={userName}
               />
             </div>
-            <div className={style.LoginContent}>Price</div>
+            <div className={style.LoginContent}>Price (Rs)</div>
             <div>
               <input
                 type="text"
@@ -164,6 +173,17 @@ export default function Register() {
                 value={userEmail}
               />
             </div>
+            <div className={style.LoginContent}>NMC Number</div>
+            <div>
+              <input
+                type="text"
+                placeholder="Enter your NMC Number"
+                className={style.inputField}
+                onChange={(event) => setNmcNumber(event.target.value)}
+                value={nmcNumber}
+              />
+            </div>
+
             <div className={style.LoginContent}>Password</div>
             <div className={style.passwordBox}>
               <input

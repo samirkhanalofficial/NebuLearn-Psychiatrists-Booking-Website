@@ -13,6 +13,8 @@ export default function Login({
         <div className={style.loginSide}>
           <div className={style.logo}></div>
           {children}
+          <br />
+          <br />
         </div>
         <div className={style.imageSide}>
           <Image

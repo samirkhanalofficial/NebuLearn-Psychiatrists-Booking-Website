@@ -70,13 +70,12 @@ export default function Dashboard() {
                 />
                 <br />
 
-                <Link
+                <button
                   style={{
                     display: "block",
                     backgroundColor: "red",
                     width: "120px",
                   }}
-                  href="#"
                   onClick={async () => {
                     const token = await localStorage.getItem("AdminToken");
                     var res = await fetch(
@@ -102,7 +101,7 @@ export default function Dashboard() {
                 >
                   <FaTrash />
                   Delete
-                </Link>
+                </button>
               </div>
             </>
           ))
